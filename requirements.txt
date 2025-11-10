@@ -13,3 +13,4 @@ docx2txt>=0.8
 xlsxwriter>=3.2
 chardet>=5.2
 python-docx>=0.8.11
+langchain-text-splitters>=0.3.0
