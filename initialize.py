@@ -83,8 +83,9 @@ def initialize_retriever():
     """
     logger = logging.getLogger(ct.LOGGER_NAME)
 
-    if "retriever" in st.session_state:
-        return
+    # ★ 追記：毎回安定して再構築（セッションの不整合を避ける）
+    # if "retriever" in st.session_state:
+    #     return
     
     docs_all = load_data_sources()
 
@@ -93,6 +94,14 @@ def initialize_retriever():
         doc.page_content = adjust_string(doc.page_content)
         for key in list(doc.metadata.keys()):
             doc.metadata[key] = adjust_string(doc.metadata[key])
+
+        # ★ 追記：必ず source を絶対パス or URL で持つ（並び替えに効かせる）
+        src = doc.metadata.get("source")
+        if isinstance(src, str) and not src.startswith("http"):
+            try:
+                doc.metadata["source"] = os.path.normpath(os.path.abspath(src))
+            except Exception:
+                pass
     
     embeddings = OpenAIEmbeddings()
     
@@ -136,13 +145,23 @@ def load_data_sources():
     # Webページの取り込み
     web_docs_all = []
     for web_url in ct.WEB_URL_LOAD_TARGETS:
-        loader = WebBaseLoader(web_url)
-        web_docs = loader.load()
-        # ★ 追加：Web 由来ドキュメントにも必ず source（URL）を付与
-        for d in web_docs:
-            d.metadata = dict(d.metadata or {})
-            d.metadata.setdefault("source", web_url)  # ← ここでURLを明示
-        web_docs_all.extend(web_docs)
+        try:
+            loader = WebBaseLoader(web_url)
+            web_docs = loader.load()
+            # ★ 追加：Web 由来ドキュメントにも必ず source（URL）を付与
+            for d in web_docs:
+                d.metadata = dict(d.metadata or {})
+                d.metadata.setdefault("source", web_url)  # ← ここでURLを明示
+            # ★ 追記：Web は大きめに分割（ヒット率向上）
+            splitter_web = CharacterTextSplitter(
+                chunk_size=getattr(ct, "CHUNK_SIZE_WEB", ct.CHUNK_SIZE * 4),
+                chunk_overlap=ct.CHUNK_OVERLAP,
+                separator="\n",
+            )
+            web_docs = splitter_web.split_documents(web_docs)
+            web_docs_all.extend(web_docs)
+        except Exception as e:
+            logging.getLogger(ct.LOGGER_NAME).warning(f"Web読み込みに失敗: {web_url} / {e}")
     docs_all.extend(web_docs_all)
 
     return docs_all
@@ -173,12 +192,7 @@ def file_load(path, docs_all):
         # =========================================================
         # 【問題6】CSVの各行を1ドキュメントへ「統合」して検索精度を上げる
         # ---------------------------------------------------------
-        # ・CSVLoaderは通常「1行 = 1ドキュメント」で返すため、TOP_Kの上限で
-        #   行数が切れてしまい一覧性が落ちる
-        # ・ここでは全行をまとめて1つのドキュメントに結合し、質問
-        #   「人事部に所属している従業員情報を一覧化して」に対して
-        #   4件以上返りやすくする
-        # ・テキストは”行内の改行をカンマ区切り”へ整形し、一覧性を向上
+        # （既存コメントを保持）
         # =========================================================
         if file_extension == ".csv":
             row_docs = loader.load()  # 1行 = 1 Document
@@ -203,8 +217,10 @@ def file_load(path, docs_all):
                 combined_text += "\n\n【部署フィルタ: 人事部 抜粋】\n" + "\n".join(lines_hr)
 
             # 単一ドキュメントとして追加（source は元CSVのパスを維持）
+            # ★ 追記：絶対パス格納
+            src_abs = os.path.normpath(os.path.abspath(path))
             docs_all.append(
-                LCDocument(page_content=combined_text, metadata={"source": path})
+                LCDocument(page_content=combined_text, metadata={"source": src_abs})
             )
             return  # ← ここで終了（CSVは統合版だけを使う）
 
@@ -214,7 +230,10 @@ def file_load(path, docs_all):
         # ★ 追加：すべての Document に source（ファイルの絶対/相対パス）を強制付与
         for d in docs:
             d.metadata = dict(d.metadata or {})
-            d.metadata.setdefault("source", path)  # ← ここで必ずパスを入れておく
+            try:
+                d.metadata.setdefault("source", os.path.normpath(os.path.abspath(path)))  # ← ここで必ず絶対パス
+            except Exception:
+                d.metadata.setdefault("source", path)
 
         docs_all.extend(docs)
 
