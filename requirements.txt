@@ -14,3 +14,6 @@ xlsxwriter>=3.2
 chardet>=5.2
 python-docx>=0.8.11
 langchain-text-splitters>=0.3.0
+langchain-chroma>=0.1.4
+beautifulsoup4>=4.12
+lxml>=5.0
