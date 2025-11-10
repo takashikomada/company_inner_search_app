@@ -24,7 +24,7 @@ from langchain_community.document_loaders import WebBaseLoader
 from langchain_text_splitters import CharacterTextSplitter
 from langchain_openai import OpenAIEmbeddings
 # from langchain_community.vectorstores import Chroma  # ← 旧（v0.3 では非推奨/不可のことがある）
-from langchain_chroma import Chroma  # ★ 修正：v0.3 系はココから import
+from langchain_community.vectorstores import Chroma
 
 # ★ ドキュメント生成用（CSV統合で使用）
 from langchain_core.documents import Document as LCDocument  # 【問題6】追加
