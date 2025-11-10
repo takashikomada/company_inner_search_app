@@ -56,7 +56,7 @@ RAG_TOP_FOLDER_PATH = "./data"  # 既存の外部参照があればそのまま�
 
 # 社員名簿CSVのパス（ここを実際のファイル名に合わせればOK）
 # 例：data/staff.csv や data/従業員名簿.csv などに変えてもOK
-STAFF_CSV = r"data/社員名簿.csv"
+STAFF_CSV = r"data/社員について/社員名簿.csv"
 
 # constants.py（SUPPORTED_EXTENSIONS 定義）  # ← ここを追加/置き換え
 # ===================================
