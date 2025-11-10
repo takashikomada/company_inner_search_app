@@ -6,13 +6,18 @@
 # ライブラリの読み込み
 ############################################################
 import os
+from operator import itemgetter
+
 from dotenv import load_dotenv
 import streamlit as st
-from langchain.prompts import ChatPromptTemplate, MessagesPlaceholder
-from langchain.schema import HumanMessage
-from langchain_openai import ChatOpenAI
-from langchain.chains import create_history_aware_retriever, create_retrieval_chain
-from langchain.chains.combine_documents import create_stuff_documents_chain
+
+# LC3対応モジュール
+# 置き換え後（v0.3 以降の正しいインポート）
+from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
+from langchain_core.messages import HumanMessage, AIMessage
+from langchain_core.output_parsers import StrOutputParser
+from langchain_core.runnables import RunnablePassthrough, RunnableLambda
+
 import constants as ct
 
 
@@ -27,90 +32,103 @@ load_dotenv()
 # 関数定義
 ############################################################
 
-def get_source_icon(source):
-    """
-    メッセージと一緒に表示するアイコンの種類を取得
-
-    Args:
-        source: 参照元のありか
-
-    Returns:
-        メッセージと一緒に表示するアイコンの種類
-    """
-    # 参照元がWebページの場合とファイルの場合で、取得するアイコンの種類を変える
-    if source.startswith("http"):
-        icon = ct.LINK_SOURCE_ICON
-    else:
-        icon = ct.DOC_SOURCE_ICON
-    
-    return icon
+def get_source_icon(source: str) -> str:
+    """参照元のURIに応じたアイコン種別を返す"""
+    return ct.LINK_SOURCE_ICON if source.startswith("http") else ct.DOC_SOURCE_ICON
 
 
-def build_error_message(message):
-    """
-    エラーメッセージと管理者問い合わせテンプレートの連結
-
-    Args:
-        message: 画面上に表示するエラーメッセージ
-
-    Returns:
-        エラーメッセージと管理者問い合わせテンプレートの連結テキスト
-    """
+def build_error_message(message: str) -> str:
+    """エラーメッセージと問い合わせテンプレートを連結"""
     return "\n".join([message, ct.COMMON_ERROR_MESSAGE])
 
 
-def get_llm_response(chat_message):
-    """
-    LLMからの回答取得
+def _format_docs(docs) -> str:
+    """取得ドキュメントをプロンプト文脈用に結合"""
+    if not docs:
+        return ""
+    return "\n\n".join(getattr(d, "page_content", str(d)) for d in docs)
 
+
+def get_llm_response(chat_message: str, *, mode: str | None = None):
+    """
+    LLMからの回答取得（RunnableベースのRAG）
     Args:
         chat_message: ユーザー入力値
-
+        mode:  None の場合は st.session_state.mode を使用
+               （★ 自動モード移行で推定したモードを main.py から渡せるように）
     Returns:
-        LLMからの回答
+        dict 例: {"answer": str, "context": [...]} ← ★ context を返すように強化
     """
-    # LLMのオブジェクトを用意
-    llm = ChatOpenAI(model_name=ct.MODEL, temperature=ct.TEMPERATURE)
+    # === ★ 5-3対応: 受け取った mode を優先、無ければセッションの mode を使う ===
+    use_mode = mode or st.session_state.get("mode", ct.ANSWER_MODE_1)
 
-    # 会話履歴なしでもLLMに理解してもらえる、独立した入力テキストを取得するためのプロンプトテンプレートを作成
-    question_generator_template = ct.SYSTEM_PROMPT_CREATE_INDEPENDENT_TEXT
+    # LC3: model_name -> model
+    llm = ChatOpenAI(model=ct.MODEL, temperature=ct.TEMPERATURE)
+
+    # 1) 履歴を踏まえた「独立質問」生成プロンプト
     question_generator_prompt = ChatPromptTemplate.from_messages(
         [
-            ("system", question_generator_template),
+            ("system", ct.SYSTEM_PROMPT_CREATE_INDEPENDENT_TEXT),
             MessagesPlaceholder("chat_history"),
-            ("human", "{input}")
+            ("human", "{input}"),
         ]
     )
+    # 「質問テキスト」を取り出す Runnable（文字列）
+    question_generator = question_generator_prompt | llm | StrOutputParser()
 
-    # モードによってLLMから回答を取得する用のプロンプトを変更
-    if st.session_state.mode == ct.ANSWER_MODE_1:
-        # モードが「社内文書検索」の場合のプロンプト
-        question_answer_template = ct.SYSTEM_PROMPT_DOC_SEARCH
-    else:
-        # モードが「社内問い合わせ」の場合のプロンプト
-        question_answer_template = ct.SYSTEM_PROMPT_INQUIRY
-    # LLMから回答を取得する用のプロンプトテンプレートを作成
+    # 2) モードに応じた回答プロンプト
+    qa_system_prompt = (
+        ct.SYSTEM_PROMPT_DOC_SEARCH
+        if use_mode == ct.ANSWER_MODE_1
+        else ct.SYSTEM_PROMPT_INQUIRY
+    )
     question_answer_prompt = ChatPromptTemplate.from_messages(
         [
-            ("system", question_answer_template),
+            ("system", qa_system_prompt),
             MessagesPlaceholder("chat_history"),
-            ("human", "{input}")
+            ("human", "{input}"),
+            # context はテンプレ変数として参照される（stuffパターン）
+            ("system", "参考情報:\n{context}"),
         ]
     )
 
-    # 会話履歴なしでもLLMに理解してもらえる、独立した入力テキストを取得するためのRetrieverを作成
-    history_aware_retriever = create_history_aware_retriever(
-        llm, st.session_state.retriever, question_generator_prompt
+    # === ★ ここから「段階的に実行して context を確保する方式」に変更 ===
+
+    # 1) 独立質問の生成
+    question_text = question_generator.invoke(
+        {"input": chat_message, "chat_history": st.session_state.chat_history}
     )
 
-    # LLMから回答を取得する用のChainを作成
-    question_answer_chain = create_stuff_documents_chain(llm, question_answer_prompt)
-    # 「RAG x 会話履歴の記憶機能」を実現するためのChainを作成
-    chain = create_retrieval_chain(history_aware_retriever, question_answer_chain)
+    # 2) retriever による関連ドキュメント取得（Document のまま保持）
+    retriever = st.session_state.retriever
+    if retriever is None:
+        # 念のためのフォールバック（初期化漏れ対策）
+        return {"answer": "検索用リトリーバが初期化されていません。initialize を確認してください。", "context": []}
+    ctx_docs = retriever.invoke(question_text)   # ← ★ これが後で components.py で使われる
 
-    # LLMへのリクエストとレスポンス取得
-    llm_response = chain.invoke({"input": chat_message, "chat_history": st.session_state.chat_history})
-    # LLMレスポンスを会話履歴に追加
-    st.session_state.chat_history.extend([HumanMessage(content=chat_message), llm_response["answer"]])
+    # 3) LLM のプロンプトに渡す “文脈テキスト” を作成
+    ctx_text = _format_docs(ctx_docs)
 
-    return llm_response
+    # 4) LLM に回答生成させる
+    result_msg = (question_answer_prompt | llm).invoke(
+        {
+            "input": chat_message,
+            "chat_history": st.session_state.chat_history,
+            "context": ctx_text,  # ← ★ 文脈テキストを渡す
+        }
+    )
+
+    # LLM応答本文
+    answer_text = getattr(result_msg, "content", str(result_msg))
+
+    # 履歴へ追加（BaseMessage型で）
+    st.session_state.chat_history.extend(
+        [HumanMessage(content=chat_message), AIMessage(content=answer_text)]
+    )
+
+    # === ★ context（Document配列）も返す ===
+    # components.py 側で「ファイルパス」「ページ番号」を表示できる
+    return {
+        "answer": answer_text,
+        "context": ctx_docs,   # ← ★ これが今回重要
+    }
