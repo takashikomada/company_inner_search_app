@@ -102,10 +102,47 @@ def get_llm_response(chat_message: str, *, mode: str | None = None):
 
     # 2) retriever による関連ドキュメント取得（Document のまま保持）
     retriever = st.session_state.retriever
+
+    # ← 先に None チェック（初期化漏れ対策）
     if retriever is None:
-        # 念のためのフォールバック（初期化漏れ対策）
-        return {"answer": "検索用リトリーバが初期化されていません。initialize を確認してください。", "context": []}
+        return {
+            "answer": "検索用リトリーバが初期化されていません。initialize を確認してください。",
+            "context": [],
+        }
+
+    # ベクトル検索で候補を取得（従来どおり）
     ctx_docs = retriever.invoke(question_text)   # ← ★ これが後で components.py で使われる
+
+    # === ★ 追加：質問に「.pdf / .docx / .txt」など具体的なファイル名が含まれる場合、
+    #              そのファイルを優先して先頭に来るよう並び替える（ページ番号確認のため）
+    try:
+        import re
+        q_lower = chat_message.lower()
+
+        # 例：「採用.pdf」「議事録.docx」「rules.txt」などを抽出
+        wanted = None
+        for ext in (".pdf", ".docx", ".txt"):
+            m = re.search(r"([^\s/\\]+%s)" % re.escape(ext), q_lower)
+            if m:
+                wanted = m.group(1)
+                break
+
+        if wanted:
+            def _score(doc):
+                src = ""
+                try:
+                    meta = getattr(doc, "metadata", {}) or {}
+                    src = (meta.get("source") or meta.get("file_path") or meta.get("path") or "").lower()
+                except Exception:
+                    pass
+                # ファイル名を含むものを最優先（0）、それ以外は1
+                return 0 if wanted in src else 1
+
+            # 並び替え（in-place でなく新しいリストにしておく）
+            ctx_docs = sorted(ctx_docs or [], key=_score)
+    except Exception:
+        # 失敗しても検索自体は続行
+        pass
 
     # 3) LLM のプロンプトに渡す “文脈テキスト” を作成
     ctx_text = _format_docs(ctx_docs)

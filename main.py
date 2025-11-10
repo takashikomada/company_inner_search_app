@@ -383,31 +383,40 @@ def _render_fallback(llm_response):
 # === ここまで追加 ===
 
 
-# === ★ 5-3: 自動モード推定器（検索⇄問い合わせ） ===
+# === ★ 5-3: 自動モード推定器（検索⇄問い合わせ）改良版 ===
 def _infer_mode(q: str) -> str:
     """
     入力文のキーワードから回答モードを推定する簡易ルールベース。
-    - 問い合わせ系（要約/説明/ポイント/…）→ ANSWER_MODE_2
-    - 検索系（どこ/場所/ファイル/議事録/…）→ ANSWER_MODE_1
-    - どちらでもなければ現在のモードを維持
+    ※ ファイル名や「参照」「探して」などは必ず文書検索モードにする
     """
     if not q:
         return st.session_state.mode
 
+    ql = q.lower()
+
+    # 1) PDF/docx/txt などのファイル指定 → 文書検索モード固定
+    if any(ext in ql for ext in (".pdf", ".docx", ".txt", ".csv")) \
+       or any(k in q for k in ("参照", "参照箇所", "探して", "ありか", "場所", "ファイル", "path", "where")):
+        return ct.ANSWER_MODE_1
+
+    # 2) 問い合わせ（説明/要約/方針/まとめなど）
     inquiry_kw = (
         "教えて","まとめて","ポイント","とは","一覧化",
         "作り方","手順","計画","方針","役割",
         "メリット","デメリット","まとめ","how","why","what"
     )
-    search_kw = (
-        "どこ","ありか","場所","ファイル","議事録",
-        "パス","path","where","存在","保存先"
-    )
-
     if any(k in q for k in inquiry_kw):
         return ct.ANSWER_MODE_2
+
+    # 3) 検索語 → 文書検索
+    search_kw = (
+        "どこ","ありか","場所","ファイル","議事録",
+        "パス","path","where","存在","保存先","探して"
+    )
     if any(k in q for k in search_kw):
         return ct.ANSWER_MODE_1
+
+    # 4) 判定できなければ現モード維持
     return st.session_state.mode
 # === 5-3 ここまで ===
 
