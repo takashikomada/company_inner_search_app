@@ -5,9 +5,16 @@
 ############################################################
 # ライブラリの読み込み
 ############################################################
-from langchain_community.document_loaders import PyMuPDFLoader, Docx2txtLoader, TextLoader
+# constants.py（先頭のインポート群）  # ← ここを追加/置き換え
+# ===================================
+# PDF / DOCX / TXT / CSV ローダーを読み込む
+from langchain_community.document_loaders import (
+    PyMuPDFLoader,        # PDF 用（pymupdf が必要）
+    Docx2txtLoader,       # DOCX 用（docx2txt が必要）
+    TextLoader,           # TXT 用
+)
 from langchain_community.document_loaders.csv_loader import CSVLoader
-
+# ===================================
 
 ############################################################
 # 共通変数の定義
@@ -26,7 +33,6 @@ WARNING_ICON = ":material/warning:"
 ERROR_ICON = ":material/error:"
 SPINNER_TEXT = "回答生成中..."
 
-
 # ==========================================
 # ログ出力系
 # ==========================================
@@ -35,27 +41,42 @@ LOGGER_NAME = "ApplicationLog"
 LOG_FILE = "application.log"
 APP_BOOT_MESSAGE = "アプリが起動されました。"
 
-
 # ==========================================
 # LLM設定系
 # ==========================================
 MODEL = "gpt-4o-mini"
 TEMPERATURE = 0.5
 
-
 # ==========================================
 # RAG参照用のデータソース系
 # ==========================================
-RAG_TOP_FOLDER_PATH = "./data"
+# 既定のデータディレクトリ（main / initialize / ユーティリティと整合を取るために明示）
+DATA_DIR = "data"
+RAG_TOP_FOLDER_PATH = "./data"  # 既存の外部参照があればそのまま利用されます
+
+# 社員名簿CSVのパス（ここを実際のファイル名に合わせればOK）
+# 例：data/staff.csv や data/従業員名簿.csv などに変えてもOK
+STAFF_CSV = r"data/社員名簿.csv"
+
+# constants.py（SUPPORTED_EXTENSIONS 定義）  # ← ここを追加/置き換え
+# ===================================
+# 【問題5】txt も取り込むように拡張子マップを拡張
 SUPPORTED_EXTENSIONS = {
-    ".pdf": PyMuPDFLoader,
+    ".pdf":  PyMuPDFLoader,
     ".docx": Docx2txtLoader,
-    ".csv": lambda path: CSVLoader(path, encoding="utf-8")
+    ".csv":  lambda path: CSVLoader(path, encoding="utf-8"),  # 必要なら 'utf-8-sig' に変更可
+    ".txt":  lambda path: TextLoader(path, encoding="utf-8", autodetect_encoding=True),
 }
+# ===================================
+
 WEB_URL_LOAD_TARGETS = [
     "https://generative-ai.web-camp.io/"
 ]
 
+# 使っていれば参照できるように（initializeでハードコードなら無視されます）
+CHUNK_SIZE = 500
+CHUNK_OVERLAP = 50
+TOP_K = 5   # ← 3 → 5 に変更（課題1）
 
 # ==========================================
 # プロンプトテンプレート
@@ -90,13 +111,11 @@ SYSTEM_PROMPT_INQUIRY = """
     {context}
 """
 
-
 # ==========================================
 # LLMレスポンスの一致判定用
 # ==========================================
 INQUIRY_NO_MATCH_ANSWER = "回答に必要な情報が見つかりませんでした。"
 NO_DOC_MATCH_ANSWER = "該当資料なし"
-
 
 # ==========================================
 # エラー・警告メッセージ
