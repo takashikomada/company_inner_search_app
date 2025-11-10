@@ -62,7 +62,7 @@ def initialize_logger():
         encoding="utf8"
     )
     formatter = logging.Formatter(
-        f"[%(levelname)s] %(asctime)s line %(lineno)s, in %(funcName)s, session_id={st.session_state.session_id}: %(message)s"
+        f"[%(levelname)s] %(asctime)s line %(lineno)s, in %(funcName)s, session_id={{st.session_state.session_id}}: %(message)s"
     )
     log_handler.setFormatter(formatter)
     logger.setLevel(logging.INFO)
@@ -91,7 +91,7 @@ def initialize_retriever():
     # Windows向けの文字調整
     for doc in docs_all:
         doc.page_content = adjust_string(doc.page_content)
-        for key in doc.metadata:
+        for key in list(doc.metadata.keys()):
             doc.metadata[key] = adjust_string(doc.metadata[key])
     
     embeddings = OpenAIEmbeddings()
@@ -138,6 +138,10 @@ def load_data_sources():
     for web_url in ct.WEB_URL_LOAD_TARGETS:
         loader = WebBaseLoader(web_url)
         web_docs = loader.load()
+        # ★ 追加：Web 由来ドキュメントにも必ず source（URL）を付与
+        for d in web_docs:
+            d.metadata = dict(d.metadata or {})
+            d.metadata.setdefault("source", web_url)  # ← ここでURLを明示
         web_docs_all.extend(web_docs)
     docs_all.extend(web_docs_all)
 
@@ -206,6 +210,12 @@ def file_load(path, docs_all):
 
         # CSV以外（pdf/docx/txt など）は従来通り
         docs = loader.load()
+
+        # ★ 追加：すべての Document に source（ファイルの絶対/相対パス）を強制付与
+        for d in docs:
+            d.metadata = dict(d.metadata or {})
+            d.metadata.setdefault("source", path)  # ← ここで必ずパスを入れておく
+
         docs_all.extend(docs)
 
 
