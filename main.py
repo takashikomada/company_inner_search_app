@@ -6,7 +6,7 @@ import streamlit as st
 
 # --- Streamlit の DOM エラー対策 ---
 st.set_page_config(
-    page_title="社内検索アプリ",
+    page_title="社内検索アプリ",  # ← 最初の1回だけ使用（必ず最初のStreamlitコマンド）
     layout="wide",
 )
 st.markdown(
@@ -60,9 +60,8 @@ from pathlib import Path
 # 2. 設定関連
 ############################################################
 # ブラウザタブの表示文言を設定
-st.set_page_config(
-    page_title=ct.APP_NAME
-)
+# 【修正】st.set_page_config は最上部で1回だけ実行済みのため、ここでは呼び出さない
+# st.set_page_config(page_title=ct.APP_NAME)
 
 # ログ出力を行うためのロガーの設定
 logger = logging.getLogger(ct.LOGGER_NAME)
@@ -481,7 +480,7 @@ if chat_message:
                 st.error(utils.build_error_message(ct.DISP_ANSWER_ERROR_MESSAGE), icon=ct.ERROR_ICON)
                 # 追加：詳細トレースをUIで展開表示
                 with st.expander("詳細エラーメッセージ（開発者向け）"):
-                    st.code(traceback.format_exc())
+                    st.code(traceback.format_exc()))
                 content = "社員名簿の表示に失敗しました。"
         # 7-4. 会話ログへの追加（ここで終了）
         st.session_state.messages.append({"role": "user", "content": chat_message})
@@ -571,4 +570,3 @@ if chat_message:
     st.session_state.messages.append({"role": "user", "content": chat_message})
     # 表示用の会話ログにAIメッセージを追加
     st.session_state.messages.append({"role": "assistant", "content": content})
-
