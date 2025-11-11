@@ -78,9 +78,11 @@ from pathlib import Path
 ############################################################
 # ブラウザタブの表示文言を設定
 # 【修正】st.set_page_config は最上部で1回だけ実行済みのため、ここでは呼び出さない
+# 
+# ↓ 重複の set_page_config を無効化（DOM衝突対策）
 # st.set_page_config(page_title=ct.APP_NAME)
-
-# ログ出力を行うためのロガーの設定
+# 
+# # ログ出力を行うためのロガーの設定
 logger = logging.getLogger(ct.LOGGER_NAME)
 
 
@@ -518,6 +520,11 @@ if chat_message:
                 st.info(f"質問内容からモードを『{auto_mode}』に自動切替して処理しました。", icon="ℹ️")
 
             # 画面読み込み時に作成したRetrieverを使い、Chainを実行
+
+            # ★ 追加: 遅延初期化（429回避・既存ベクターストア優先）
+            if not _ensure_retriever_lazy():
+                st.error("検索用リトリーバの初期化に失敗したため、回答生成をスキップしました。", icon=ct.ERROR_ICON)
+                return
             llm_response = utils.get_llm_response(chat_message, mode=auto_mode)
 
             # ★ 追加：生レスポンスのデバッグ表示

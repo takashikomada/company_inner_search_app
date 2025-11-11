@@ -10,6 +10,7 @@ from operator import itemgetter
 
 from dotenv import load_dotenv
 import streamlit as st
+from tenacity import retry, wait_exponential, stop_after_attempt
 
 # LC3対応モジュール
 # 置き換え後（v0.3 以降の正しいインポート）
@@ -28,6 +29,14 @@ import constants as ct
 # 「.env」ファイルで定義した環境変数の読み込み
 load_dotenv()
 
+
+
+############################################################
+# 追加: OpenAI 呼び出しの指数バックオフ（429対策）
+############################################################
+@retry(wait=wait_exponential(multiplier=1, min=1, max=8), stop=stop_after_attempt(3), reraise=True)
+def _invoke_with_retry(runnable, inputs: dict):
+    return runnable.invoke(inputs)
 
 ############################################################
 # 既存関数（変更なし or 追記のみ）
@@ -366,7 +375,7 @@ def get_llm_response(chat_message: str, *, mode: str | None = None):
     # === ★ ここから「段階的に実行して context を確保する方式」に変更 ===
 
     # 1) 独立質問の生成
-    question_text = question_generator.invoke(
+    question_text = _invoke_with_retry(question_generator, 
         {"input": chat_message, "chat_history": st.session_state.chat_history}
     )
 
