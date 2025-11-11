@@ -1,34 +1,40 @@
-# # st.write("このファイルは、Webアプリのメイン処理が記述されたファイルです。")
-
 # ============================================================
 # 🔵 1. Streamlit を最初に読み込む（最優先）
 # ============================================================
 import streamlit as st
-# 初期案内表示（タイトル直後に呼び出し推奨）
-import components as cn
-try:
-    cn.render_top_notice()
-except Exception:
-    pass
 
-
-# ============================================================
-# 🔵 2. set_page_config は “最初の Streamlit コマンド”
-# ============================================================
 st.set_page_config(
-    page_title="社内検索アプリ",
+    page_title="社内情報特化型生成AI検索アプリ",
+    page_icon="📘",
     layout="wide",
 )
 
+# このファイルは、Webアプリのメイン処理が記述されたファイルです。
+
+# -------------------------
+# 🎉 1. タイトル（必ず最上段）
+# -------------------------
+st.markdown(
+    "<h1 style='text-align: center;'>社内情報特化型生成AI検索アプリ</h1>",
+    unsafe_allow_html=True
+)
+
+# -------------------------
+# 🎉 2. 説明ボックス
+# -------------------------
+st.info(
+    "こんにちは。私は社内文書の情報をもとに回答する生成AIチャットボットです。"
+    "サイドバーで利用目的を選択し、画面下部のチャット欄からメッセージを送信してください。"
+)
+st.warning("具体的に入力したほうが期待通りの回答を得やすいです。")
+
 # ============================================================
-# 🔵 3. グローバルCSS（set_page_config より後ならOK）
+# 🔵 3. グローバルCSS（set_page_config の後ならOK）
 # ============================================================
 st.markdown(
     """
     <style>
-    .stApp {
-        overflow: visible !important;
-    }
+    .stApp { overflow: visible !important; }
     </style>
     """,
     unsafe_allow_html=True,
@@ -57,10 +63,6 @@ logging.basicConfig(
 ############################################################
 # 「.env」ファイルから環境変数を読み込むための関数
 from dotenv import load_dotenv
-# ログ出力を行うためのモジュール
-import logging
-# streamlitアプリの表示を担当するモジュール
-import streamlit as st
 # （自作）画面表示以外の様々な関数が定義されているモジュール
 import utils
 # （自作）アプリ起動時に実行される初期化処理が記述された関数
@@ -74,9 +76,9 @@ import constants as ct
 from pathlib import Path
 
 # ★★★★★ ここに追加してください ★★★★★
-import os
 os.environ.setdefault("USER_AGENT", "company_inner_search_app/1.0")
 # ★★★★★ ここまで ★★★★★
+
 
 ############################################################
 # 2. 設定関連
@@ -126,7 +128,6 @@ if not "initialized" in st.session_state:
 # 4. 初期表示
 ############################################################
 # タイトル表示
-cn.display_app_title()   # ← これを追加
 
 # ================================
 # 【問題3】説明と利用目的をサイドバーに移動
