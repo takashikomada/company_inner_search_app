@@ -29,3 +29,4 @@ langchain-chroma==0.1.4
 pymupdf==1.24.10
 docx2txt==0.8
 beautifulsoup4==4.12.3
+rank_bm25==0.2.2
