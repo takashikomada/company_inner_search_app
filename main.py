@@ -1,6 +1,4 @@
-"""
-このファイルは、Webアプリのメイン処理が記述されたファイルです。
-"""
+# st.write("このファイルは、Webアプリのメイン処理が記述されたファイルです。")
 
 # ============================================================
 # 🔵 1. Streamlit を最初に読み込む（最優先）
@@ -73,17 +71,28 @@ import constants as ct
 # 追加：ユーティリティで使用（社員名簿の直接表示）
 from pathlib import Path
 
+# ★★★★★ ここに追加してください ★★★★★
+import os
+os.environ.setdefault("USER_AGENT", "company_inner_search_app/1.0")
+# ★★★★★ ここまで ★★★★★
+
 ############################################################
 # 2. 設定関連
 ############################################################
-# ブラウザタブの表示文言を設定
+
 # 【修正】st.set_page_config は最上部で1回だけ実行済みのため、ここでは呼び出さない
-# 
 # ↓ 重複の set_page_config を無効化（DOM衝突対策）
 # st.set_page_config(page_title=ct.APP_NAME)
-# 
-# # ログ出力を行うためのロガーの設定
-logger = logging.getLogger(ct.LOGGER_NAME)
+
+# .env の読み込み（ここで一度だけ）
+load_dotenv()
+
+# USER_AGENT は直前で setdefault 済み（.env と併用OK）
+
+# ロガー取得（basicConfig はアプリ全体で一度だけ。未設定なら INFO で設定）
+if not logging.getLogger().handlers:
+    logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(getattr(ct, "LOGGER_NAME", "ApplicationLog"))
 
 
 ############################################################
@@ -523,8 +532,8 @@ if chat_message:
 
             # ★ 追加: 遅延初期化（429回避・既存ベクターストア優先）
             if not _ensure_retriever_lazy():
-                st.error("検索用リトリーバの初期化に失敗したため、回答生成をスキップしました。", icon=ct.ERROR_ICON)
-                return
+               st.error("検索用リトリーバの初期化に失敗したため、回答生成をスキップしました。", icon=ct.ERROR_ICON)
+               st.stop()  # ← Streamlit ではこちらを使う
             llm_response = utils.get_llm_response(chat_message, mode=auto_mode)
 
             # ★ 追加：生レスポンスのデバッグ表示
