@@ -314,3 +314,21 @@ def display_contact_llm_response(llm_response):
 
     content = {"mode": ct.ANSWER_MODE_2, "answer": answer, "message": message, "file_info_list": file_info_list}
     return content
+
+# ==========================================
+# タイトル直下の案内表示（初期画面ヒント）
+# ==========================================
+def render_top_notice():
+    """タイトル直下に案内と注意を表示（UI統一）。既存コメントは保持。"""
+    import streamlit as st  # ローカルimportで循環依存を回避
+    # 緑の案内
+    st.info(
+        "こんにちは。私は社内文書の情報をもとに回答する生成AIチャットボットです。"
+        "サイドバーで利用目的を選択し、画面下部のチャット欄からメッセージを送信してください。",
+        icon="💬",
+    )
+    # 黄色の注意
+    st.warning(
+        "具体的に入力したほうが期待通りの回答を得やすいです。",
+        icon="⚠️",
+    )

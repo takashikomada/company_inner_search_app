@@ -66,6 +66,7 @@ SUPPORTED_EXTENSIONS = {
     ".docx": Docx2txtLoader,
     ".csv":  lambda path: CSVLoader(path, encoding="utf-8"),  # 必要なら 'utf-8-sig' に変更可
     ".txt":  lambda path: TextLoader(path, encoding="utf-8", autodetect_encoding=True),
+    '.txt': TextLoader,
 }
 # ===================================
 
