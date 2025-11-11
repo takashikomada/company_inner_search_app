@@ -15,6 +15,8 @@ from langchain_community.vectorstores import Chroma
 from langchain_community.retrievers import BM25Retriever  # ★ 追加: フォールバック用
 from langchain_openai import OpenAIEmbeddings
 from langchain_text_splitters import CharacterTextSplitter
+from langchain_core.documents import Document  # ★ 追加: 手動生成用
+import csv  # ★ 追加: CSV統合用
 
 from langchain_community.document_loaders import (
     PyMuPDFLoader,
@@ -42,6 +44,44 @@ logger = logging.getLogger(ct.LOGGER_NAME)
 ############################################################
 # データ読み込み（docx/pdf/txt/csv）
 ############################################################
+# =================================================================
+# ★ 課題6対策: CSVを1ドキュメントに統合して読み込むヘルパー
+# =================================================================
+def _csv_to_merged_document(file_path: str) -> Document:
+    """
+    CSVの各行を「- キー: 値 / ...」の箇条書きに整形し、
+    1つの大きなテキスト（Document）に統合して返す。
+    列名は固定せず、存在する全カラムを連結するため任意のCSVに対応。
+    """
+    rows_out = []
+    try:
+        # UTF-8/BOM どちらでも開けるよう utf-8-sig
+        with open(file_path, newline="", encoding="utf-8-sig") as f:
+            reader = csv.DictReader(f)
+            for row in reader:
+                parts = []
+                for k, v in (row or {}).items():
+                    if v is None:
+                        continue
+                    v = str(v).strip()
+                    if v:
+                        parts.append(f"{k}: {v}")
+                if parts:
+                    rows_out.append("- " + " / ".join(parts))
+    except Exception:
+        # 失敗しても呼び出し元でフォールバック可
+        pass
+
+    merged_text = "【社員名簿（統合）】\n" + "\n".join(rows_out)
+    return Document(
+        page_content=merged_text,
+        metadata={
+            "source": file_path.replace("\\", "/"),
+            "is_csv_merged": True,  # 後段の分割スキップ判定に使用
+        },
+    )
+
+
 def recursive_file_check(target_dir: str, docs_all: list):
     """
     指定フォルダ配下のファイルをすべて再帰的に探索し、対応するローダーで読み込む
@@ -56,29 +96,24 @@ def recursive_file_check(target_dir: str, docs_all: list):
                 continue
 
             try:
-                loader = loader_cls(file_path)
-                docs = loader.load()
+                # ★ CSVだけは1ドキュメントに統合して取り込む（課題6）
+                if ext == ".csv":
+                    try:
+                        docs = [_csv_to_merged_document(file_path)]
+                    except Exception as e:
+                        logger.warning(f"CSV統合読み込みに失敗: {file_path} ({e})")
+                        loader = loader_cls(file_path)
+                        docs = loader.load()
+                else:
+                    loader = loader_cls(file_path)
+                    docs = loader.load()
+
                 # source を固定化
                 for d in docs:
                     d.metadata = dict(d.metadata or {})
                     d.metadata["source"] = file_path.replace("\\", "/")
-                # ★ CSVだけは1ドキュメントに統合して取り込む（課題6）
-if ext == ".csv":
-    try:
-        merged_doc = _csv_to_merged_document(file_path)
-        docs = [merged_doc]
-    except Exception as e:
-        logger.warning(f"CSV統合読み込みに失敗: {file_path} ({e})")
-        loader = loader_cls(file_path)
-        docs = loader.load()
-else:
-    loader = loader_cls(file_path)
-    docs = loader.load()
 
-for d in docs:
-    d.metadata = dict(d.metadata or {})
-    d.metadata["source"] = file_path.replace("\\", "/")
-docs_all.extend(docs)
+                docs_all.extend(docs)
             except Exception as e:
                 logger.warning(f"ファイル読み込み失敗: {file_path} ({e})")
 
@@ -142,44 +177,6 @@ def adjust_string(text: str) -> str:
 ############################################################
 # Retriever の初期化
 ############################################################
-
-# =================================================================
-# ★ 課題6対策: CSVを1ドキュメントに統合して読み込むヘルパー
-# =================================================================
-def _csv_to_merged_document(file_path: str) -> Document:
-    """
-    CSVの各行を「- キー: 値 / ...」の箇条書きに整形し、
-    1つの大きなテキスト（Document）に統合して返す。
-    列名は固定せず、存在する全カラムを連結するため任意のCSVに対応。
-    """
-    rows_out = []
-    try:
-        # UTF-8/BOM どちらでも開けるよう utf-8-sig
-        with open(file_path, newline="", encoding="utf-8-sig") as f:
-            import csv as _csv
-            reader = _csv.DictReader(f)
-            for row in reader:
-                parts = []
-                for k, v in (row or {}).items():
-                    if v is None:
-                        continue
-                    v = str(v).strip()
-                    if v:
-                        parts.append(f"{k}: {v}")
-                if parts:
-                    rows_out.append("- " + " / ".join(parts))
-    except Exception:
-        # 失敗しても呼び出し元でフォールバック可
-        pass
-
-    merged_text = "【社員名簿（統合）】\n" + "\n".join(rows_out)
-    return Document(
-        page_content=merged_text,
-        metadata={
-            "source": file_path.replace("\\", "/"),
-            "is_csv_merged": True,  # 後段の分割スキップ判定に使用
-        },
-    )
 def initialize_retriever():
     """
     ベクターストア（Chroma）を初期化する
@@ -194,7 +191,6 @@ def initialize_retriever():
     # [PATCH] Chroma 永続化パス
     persist_dir = getattr(ct, "CHROMA_DIR", "./chroma_store")
     persist_path = Path(persist_dir)
-
     persist_path.mkdir(parents=True, exist_ok=True)
 
     def has_chroma_files(path: Path) -> bool:
@@ -203,20 +199,18 @@ def initialize_retriever():
         except Exception:
             return False
 
-    try:
-        # [PATCH] 永続化データが存在 → そのままロード
-        if has_chroma_files(persist_path):
-            logger.info(f"永続化済 Chroma をロード: {persist_dir}")
-
-            try:
+    # [PATCH] 永続化データが存在 → そのままロード
+    if has_chroma_files(persist_path):
+        logger.info(f"永続化済 Chroma をロード: {persist_dir}")
+        try:
             db = Chroma(
-                            persist_directory=persist_dir,
-                            embedding_function=embeddings,
-                        )
-            
-                        st.session_state.retriever = db.as_retriever(search_kwargs={"k": ct.TOP_K})
+                persist_directory=persist_dir,
+                embedding_function=embeddings,
+            )
+            st.session_state.retriever = db.as_retriever(search_kwargs={"k": ct.TOP_K})
             return
-        except Exception as e:
+        except Exception:
+            # ロード失敗 → フォールバック
             logger.error("永続化済Chromaのロードに失敗 → BM25にフォールバックします。", exc_info=True)
             docs_all = load_data_sources()
             for doc in docs_all:
@@ -227,7 +221,14 @@ def initialize_retriever():
                 chunk_overlap=ct.CHUNK_OVERLAP,
                 separator="\n",
             )
-            splitted_docs = splitter.split_documents(docs_all)
+            # ★ 統合CSVは分割しない
+            splitted_docs = []
+            for d in docs_all:
+                if isinstance(d.metadata, dict) and d.metadata.get("is_csv_merged"):
+                    splitted_docs.append(d)
+                else:
+                    splitted_docs.extend(splitter.split_documents([d]))
+
             bm25 = BM25Retriever.from_documents(splitted_docs)
             bm25.k = ct.TOP_K
             st.session_state.retriever = bm25
@@ -238,35 +239,39 @@ def initialize_retriever():
                 icon="⚠️",
             )
             return
+
+    # [PATCH] 初回のみ埋め込み生成
+    logger.info("初回起動 → 全文書を読み込み、埋め込み生成します")
+    docs_all = load_data_sources()
+    for doc in docs_all:
+        doc.page_content = adjust_string(doc.page_content)
+        doc.metadata = {k: adjust_string(v) for k, v in (doc.metadata or {}).items()}
+
+    splitter = CharacterTextSplitter(
+        chunk_size=ct.CHUNK_SIZE,
+        chunk_overlap=ct.CHUNK_OVERLAP,
+        separator="\n",
+    )
+
+    # ★ 統合CSVは分割しない
+    splitted_docs = []
+    for d in docs_all:
+        if isinstance(d.metadata, dict) and d.metadata.get("is_csv_merged"):
+            splitted_docs.append(d)
         else:
-            # [PATCH] 初回のみ埋め込み生成
-            logger.info("初回起動 → 全文書を読み込み、埋め込み生成します")
+            splitted_docs.extend(splitter.split_documents([d]))
 
-            docs_all = load_data_sources()
-
-            for doc in docs_all:
-                doc.page_content = adjust_string(doc.page_content)
-                doc.metadata = {k: adjust_string(v) for k, v in (doc.metadata or {}).items()}
-
-            splitter = CharacterTextSplitter(
-                chunk_size=ct.CHUNK_SIZE,
-                chunk_overlap=ct.CHUNK_OVERLAP,
-                separator="\n",
-            )
-            splitted_docs = splitter.split_documents(docs_all)
-
-            try:
+    try:
         db = Chroma.from_documents(
-                        splitted_docs,
-                        embedding=embeddings,
-                        persist_directory=persist_dir,  # [PATCH] 永続化
-                    )
-                    db.persist()
-                    logger.info("Chroma 永続化完了")
-        
-                st.session_state.retriever = db.as_retriever(search_kwargs={"k": ct.TOP_K})
+            splitted_docs,
+            embedding=embeddings,
+            persist_directory=persist_dir,  # [PATCH] 永続化
+        )
+        db.persist()
+        logger.info("Chroma 永続化完了")
+        st.session_state.retriever = db.as_retriever(search_kwargs={"k": ct.TOP_K})
         return
-    except Exception as e:
+    except Exception:
         logger.error("埋め込み生成に失敗 → BM25 リトリーバにフォールバックします。", exc_info=True)
         bm25 = BM25Retriever.from_documents(splitted_docs)
         bm25.k = ct.TOP_K
@@ -278,14 +283,6 @@ def initialize_retriever():
             icon="⚠️",
         )
         return
-        # retriever 化
-        st.session_state.retriever = db.as_retriever(
-            search_kwargs={"k": ct.TOP_K}
-        )
-
-    except Exception as e:
-        logger.error("初期化エラー", exc_info=True)
-        raise e
 
 
 ############################################################
