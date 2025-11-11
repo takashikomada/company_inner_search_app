@@ -497,7 +497,7 @@ if chat_message:
                 st.error(utils.build_error_message(ct.DISP_ANSWER_ERROR_MESSAGE), icon=ct.ERROR_ICON)
                 # 追加：詳細トレースをUIで展開表示
                 with st.expander("詳細エラーメッセージ（開発者向け）"):
-                    st.code(traceback.format_exc()))
+                    st.code(traceback.format_exc())
                 content = "社員名簿の表示に失敗しました。"
         # 7-4. 会話ログへの追加（ここで終了）
         st.session_state.messages.append({"role": "user", "content": chat_message})
