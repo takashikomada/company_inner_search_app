@@ -1,0 +1,4 @@
+[ERROR] 2025-11-09 10:02:44,984 line 44, in <module>, session_id=bf062c1fce6d4fa28a987c15201fc3e3: 初期化処理に失敗しました。
+Error loading ./data\MTG議事録\議事録ルール.txt
+[ERROR] 2025-11-10 09:29:08,563 line 44, in <module>, session_id=5315a0c754bc4cf7a3db9dd8b2839238: 初期化処理に失敗しました。
+pymupdf package not found, please install it with `pip install pymupdf`

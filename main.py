@@ -1,7 +1,15 @@
 # ============================================================
 # 🔵 1. Streamlit を最初に読み込む（最優先）
-# ============================================================
+# ============================================================import streamlit as st
 import streamlit as st
+# === ★ 追加（必須）: セッション初期化（常に最上部で実行） ===
+if "chat_history" not in st.session_state:
+    st.session_state.chat_history = []  # utilsで参照されるため必須
+if "mode" not in st.session_state:
+    st.session_state.mode = "社内問い合わせ"  # デフォルトの保険
+
+
+
 
 st.set_page_config(
     page_title="社内情報特化型生成AI検索アプリ",
@@ -437,40 +445,53 @@ def _render_fallback(llm_response):
 # === ここまで追加 ===
 
 
-# === ★ 5-3: 自動モード推定器（検索⇄問い合わせ）改良版 ===
+# === ★ 5-3: 自動モード推定器（検索⇄問い合わせ）強化版 ===
 def _infer_mode(q: str) -> str:
     """
-    入力文のキーワードから回答モードを推定する簡易ルールベース。
-    ※ ファイル名や「参照」「探して」などは必ず文書検索モードにする
+    入力文から文書検索モード/問い合わせモードを判定する強化ロジック。
+    ・「要約・まとめ・ポイント」等 → 文書検索（元文書を参照するタスク）
+    ・ 明確なFAQ系（制度・手続き・回数・上限）だけ問い合わせ扱い
     """
     if not q:
         return st.session_state.mode
 
-    ql = q.lower()
+    qq = q.lower()
 
-    # 1) PDF/docx/txt などのファイル指定 → 文書検索モード固定
-    if any(ext in ql for ext in (".pdf", ".docx", ".txt", ".csv")) \
-       or any(k in q for k in ("参照", "参照箇所", "探して", "ありか", "場所", "ファイル", "path", "where")):
+    # -----------------------------
+    # 1) 文書検索が強制されるケース
+    # -----------------------------
+    doc_search_kw = [
+        "要約", "まとめ", "ポイント", "要点", "整理",
+        "育成", "方針", "戦略", "計画", "施策", "目標",
+        "議事録", "報告書", "資料", "内容から", "文書から",
+        "どの文書", "どの記事録", "どこに書いてある",
+    ]
+    if any(k in q for k in doc_search_kw):
         return ct.ANSWER_MODE_1
 
-    # 2) 問い合わせ（説明/要約/方針/まとめなど）
-    inquiry_kw = (
-        "教えて","まとめて","ポイント","とは","一覧化",
-        "作り方","手順","計画","方針","役割",
-        "メリット","デメリット","まとめ","how","why","what"
-    )
-    if any(k in q for k in inquiry_kw):
+    # PDF/docx/txt などのファイル指定
+    if any(ext in qq for ext in [".pdf", ".docx", ".txt", ".md", ".csv"]):
+        return ct.ANSWER_MODE_1
+
+    # 「探す」「参照」など検索系ワード
+    if any(k in q for k in ["探して", "参照", "ありか", "どこに", "場所", "where"]):
+        return ct.ANSWER_MODE_1
+
+    # -----------------------------
+    # 2) FAQ（社内問い合わせ）に寄せるケース
+    # -----------------------------
+    faq_kw = [
+        "上限", "金額", "方法", "手続き", "提出",
+        "何日", "何回", "いつまで", "どれくらい",
+        "規定", "制度", "申請", "ルール",
+        "できますか", "できますでしょうか",
+    ]
+    if any(k in q for k in faq_kw):
         return ct.ANSWER_MODE_2
 
-    # 3) 検索語 → 文書検索
-    search_kw = (
-        "どこ","ありか","場所","ファイル","議事録",
-        "パス","path","where","存在","保存先","探して"
-    )
-    if any(k in q for k in search_kw):
-        return ct.ANSWER_MODE_1
-
-    # 4) 判定できなければ現モード維持
+    # -----------------------------
+    # 3) 特に該当しなければ、ユーザー選択モードを維持
+    # -----------------------------
     return st.session_state.mode
 # === 5-3 ここまで ===
 
@@ -534,9 +555,6 @@ if chat_message:
             # 画面読み込み時に作成したRetrieverを使い、Chainを実行
 
             # ★ 追加: 遅延初期化（429回避・既存ベクターストア優先）
-            if not _ensure_retriever_lazy():
-               st.error("検索用リトリーバの初期化に失敗したため、回答生成をスキップしました。", icon=ct.ERROR_ICON)
-               st.stop()  # ← Streamlit ではこちらを使う
             llm_response = utils.get_llm_response(chat_message, mode=auto_mode)
 
             # ★ 追加：生レスポンスのデバッグ表示

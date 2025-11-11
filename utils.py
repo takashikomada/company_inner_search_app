@@ -363,14 +363,18 @@ def get_llm_response(chat_message: str, *, mode: str | None = None):
         else ct.SYSTEM_PROMPT_INQUIRY
     )
     question_answer_prompt = ChatPromptTemplate.from_messages(
-        [
-            ("system", qa_system_prompt),
-            MessagesPlaceholder("chat_history"),
-            ("human", "{input}"),
-            # context はテンプレ変数として参照される（stuffパターン）
-            ("system", "参考情報:\n{context}"),
-        ]
-    )
+    [
+        ("system", qa_system_prompt),
+        MessagesPlaceholder("chat_history"),
+        ("human", "{input}"),
+        # context はテンプレ変数として参照される（stuffパターン）
+        (
+            "system",
+            "参考情報:\n{context}\n\n"
+            "出力の最後に必ず「参照元: <ファイルパス>（必要ならページ番号）」を列挙してください。"
+        ),
+    ]
+)
 
     # === ★ ここから「段階的に実行して context を確保する方式」に変更 ===
 
@@ -379,7 +383,7 @@ def get_llm_response(chat_message: str, *, mode: str | None = None):
         {"input": chat_message, "chat_history": st.session_state.chat_history}
     )
 
-    # 2) retriever による関連ドキュメント取得（Document のまま保持）
+# 2) retriever による関連ドキュメント取得（Document のまま保持）
     retriever = st.session_state.retriever
 
     # ← 先に None チェック（初期化漏れ対策）
@@ -389,7 +393,54 @@ def get_llm_response(chat_message: str, *, mode: str | None = None):
             "context": [],
         }
 
-    ctx_docs = retriever.invoke(question_text)   # ← ★ これが後で components.py で使われる
+    # === 取得（多段フォールバック：通常 → k拡張 → HYDE → BM25）================
+    # ① 通常検索
+    ctx_docs = []
+    try:
+        ctx_docs = retriever.invoke(question_text) or []
+    except Exception:
+        ctx_docs = []
+
+    # ② 0件なら：k を広げて再検索（閾値が厳しすぎるケースの救済）
+    if not ctx_docs:
+        try:
+            if hasattr(retriever, "search_kwargs"):
+                current_k = int(retriever.search_kwargs.get("k", 4))
+                retriever.search_kwargs["k"] = max(8, current_k)  # 6〜8程度に拡張
+        except Exception:
+            pass
+        try:
+            ctx_docs = retriever.invoke(question_text) or []
+        except Exception:
+            ctx_docs = []
+
+    # ③ まだ0件なら：HYDEでクエリ拡張 → 再検索
+    if not ctx_docs:
+        try:
+            hyde_prompt = (
+                "次の問い合わせに答えるための社内文書の一部のような短い説明を日本語で3〜5文書いてください。"
+                "部署名・方針・施策など、検索にかかりやすい語を自然に含めてください。\n\n"
+                f"問い合わせ: {question_text}"
+            )
+            hyde_msg = llm.invoke(hyde_prompt)  # ChatOpenAI 返りは Message 想定
+            hyde_text = getattr(hyde_msg, "content", str(hyde_msg))
+        except Exception:
+            hyde_text = question_text  # LLM失敗時は元の質問で代替
+
+        try:
+            ctx_docs = retriever.invoke(hyde_text) or []
+        except Exception:
+            ctx_docs = []
+
+    # ④ それでも0件なら：BM25 があればフォールバック
+    if not ctx_docs:
+        bm25 = st.session_state.get("bm25_retriever", None)
+        if bm25 is not None:
+            try:
+                ctx_docs = (bm25.get_relevant_documents(question_text) or [])[:5]
+            except Exception:
+                pass
+    # =====================================================================
 
     # === ★ 追加：ファイル名/フォルダ名優先の並び替え =========================
     try:

@@ -1,27 +1,38 @@
-# Python venv
-.venv/
-env/
-venv/
+# --- keep existing rules above ---
 
-# Streamlit & local configs
-.streamlit/
+# Secrets
+.env
+*.env
+.env.*.local
 
-# Chroma DB
-chroma_store/
-chroma_store/*
+# Editor/IDE
+.vscode/
+.idea/
+*.code-workspace
 
-# OS / Editor
-.DS_Store
-Thumbs.db
+# Python tools caches
+.mypy_cache/
+.pytest_cache/
+.ruff_cache/
+.coverage
+coverage.xml
 
-# Python cache
-__pycache__/
-*.pyc
-*.pyo
+# Jupyter
+.ipynb_checkpoints/
 
-# Logs
-*.log
+# Python version manager
+.python-version
 
-# Data outputs (念のため)
-data/**/*.csv~
-data/**/*.tmp
+# SQLiteなどローカルDB（※必要なら個別解除）
+*.sqlite
+*.sqlite3
+*.db
+
+# Diff/backupのゴミ
+*.bak
+*.orig
+*.rej
+
+# 強化：サブフォルダ含むOSファイル
+**/.DS_Store
+**/Thumbs.db

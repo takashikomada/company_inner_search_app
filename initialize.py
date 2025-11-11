@@ -91,6 +91,48 @@ def recursive_file_check(target_dir: str, docs_all: list):
             file_path = os.path.join(root, file)
             ext = os.path.splitext(file)[1].lower()
 
+            # === TXT 取り込み（課題5対応・既存コメント保持） =====================
+            if ext == ".txt":
+                try:
+                    loader = TextLoader(file_path, encoding="utf-8")
+                    docs = loader.load()
+                except Exception:
+                    try:
+                        loader = TextLoader(file_path, encoding="cp932")
+                        docs = loader.load()
+                    except Exception:
+                        _content = None
+                        for _enc in ("utf-8-sig", "utf-8", "cp932"):
+                            try:
+                                with open(file_path, "r", encoding=_enc) as _f:
+                                    _content = _f.read()
+                                    break
+                            except Exception:
+                                _content = None
+                        if _content is not None:
+                            docs = [Document(page_content=_content, metadata={
+                                "source": file_path.replace("\\","/"),
+                                "file_path": file_path.replace("\\","/"),
+                                "title": os.path.basename(file_path),
+                                "kind": "txt_fallback"
+                            })]
+                        else:
+                            docs = []
+                # メタデータ標準化
+                for d in docs:
+                    md = dict(d.metadata or {})
+                    md.setdefault("source", file_path.replace("\\","/"))
+                    md.setdefault("file_path", file_path.replace("\\","/"))
+                    md.setdefault("title", os.path.basename(file_path))
+                    d.metadata = md
+                docs_all.extend(docs)
+                try:
+                    logger.info(f"INGEST OK (txt): {file_path}")
+                except Exception:
+                    pass
+                continue
+            # ================================================================
+
             loader_cls = ct.SUPPORTED_EXTENSIONS.get(ext)
             if not loader_cls:
                 continue
@@ -121,6 +163,11 @@ def recursive_file_check(target_dir: str, docs_all: list):
 ############################################################
 # Webページ読み込み
 ############################################################
+    try:
+        logger.info("INGEST SUMMARY: files=%d" % (len(docs_all)))
+    except Exception:
+        pass
+
 def load_web_sources():
     """
     事前に指定した URL からデータを読み込む（WebBaseLoader）

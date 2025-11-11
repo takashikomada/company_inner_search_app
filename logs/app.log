@@ -1,0 +1,811 @@
+2025-11-10 09:36:25,065 [WARNING] langchain_community.utils.user_agent: USER_AGENT environment variable not set, consider setting it to identify your requests.
+2025-11-10 09:36:25,078 [ERROR] ApplicationLog: 初期化処理に失敗しました。
+pymupdf package not found, please install it with `pip install pymupdf`
+2025-11-10 09:39:02,619 [WARNING] langchain_community.utils.user_agent: USER_AGENT environment variable not set, consider setting it to identify your requests.
+2025-11-10 09:39:09,939 [INFO] chromadb.telemetry.product.posthog: Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-11-10 09:39:46,041 [INFO] httpx: HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2025-11-10 09:39:47,590 [INFO] ApplicationLog: アプリが起動されました。
+2025-11-10 09:40:26,746 [INFO] ApplicationLog: {'message': ' 社員の育成方針に関するMTGの議事録', 'application_mode': '社内問い合わせ'}
+2025-11-10 09:40:35,539 [INFO] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-11-10 09:40:36,925 [INFO] httpx: HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2025-11-10 09:40:48,636 [INFO] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-11-10 09:40:48,650 [ERROR] ApplicationLog: 回答表示に失敗しました。
+'context'
+2025-11-10 09:41:08,427 [INFO] ApplicationLog: {'message': '人事部に所属している従業員情報を一覧化して', 'application_mode': '社内文書検索'}
+2025-11-10 09:41:19,872 [INFO] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-11-10 09:41:21,000 [INFO] httpx: HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2025-11-10 09:41:22,502 [INFO] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-11-10 09:41:22,521 [ERROR] ApplicationLog: 回答表示に失敗しました。
+'context'
+2025-11-10 09:46:41,255 [WARNING] langchain_community.utils.user_agent: USER_AGENT environment variable not set, consider setting it to identify your requests.
+2025-11-10 09:46:43,756 [INFO] chromadb.telemetry.product.posthog: Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-11-10 09:46:48,191 [INFO] httpx: HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2025-11-10 09:46:49,608 [INFO] ApplicationLog: アプリが起動されました。
+2025-11-10 09:47:02,820 [INFO] ApplicationLog: {'message': '人事部に所属している従業員情報を一覧化して', 'application_mode': '社内文書検索'}
+2025-11-10 09:47:07,370 [INFO] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-11-10 09:47:08,833 [INFO] httpx: HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2025-11-10 09:47:10,259 [INFO] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-11-10 09:47:10,266 [ERROR] ApplicationLog: 回答表示に失敗しました。
+'context'
+Traceback (most recent call last):
+  File "C:\Users\diva1\OneDrive\デスクトップ\company_inner_search_app\ダウンロード用\company_inner_search_app\main.py", line 254, in <module>
+    content = cn.display_search_llm_response(llm_response)
+  File "C:\Users\diva1\OneDrive\デスクトップ\company_inner_search_app\ダウンロード用\company_inner_search_app\components.py", line 144, in display_search_llm_response
+    if llm_response["context"] and llm_response["answer"] != ct.NO_DOC_MATCH_ANSWER:
+       ~~~~~~~~~~~~^^^^^^^^^^^
+KeyError: 'context'
+2025-11-10 09:47:16,370 [INFO] ApplicationLog: {'message': '人事部に所属している従業員情報を一覧化して', 'application_mode': '社内問い合わせ'}
+2025-11-10 09:52:09,671 [WARNING] langchain_community.utils.user_agent: USER_AGENT environment variable not set, consider setting it to identify your requests.
+2025-11-10 09:52:12,195 [INFO] chromadb.telemetry.product.posthog: Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-11-10 09:52:17,077 [INFO] httpx: HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2025-11-10 09:52:18,314 [INFO] ApplicationLog: アプリが起動されました。
+2025-11-10 09:54:27,098 [WARNING] langchain_community.utils.user_agent: USER_AGENT environment variable not set, consider setting it to identify your requests.
+2025-11-10 09:54:29,776 [INFO] chromadb.telemetry.product.posthog: Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-11-10 09:54:34,297 [INFO] httpx: HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2025-11-10 09:54:35,764 [INFO] ApplicationLog: アプリが起動されました。
+2025-11-10 09:54:46,890 [INFO] ApplicationLog: {'message': '人事部に所属している従業員情報を一覧化して', 'application_mode': '社内問い合わせ'}
+2025-11-10 10:00:13,602 [WARNING] langchain_community.utils.user_agent: USER_AGENT environment variable not set, consider setting it to identify your requests.
+2025-11-10 10:00:16,103 [INFO] chromadb.telemetry.product.posthog: Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-11-10 10:00:20,335 [INFO] httpx: HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2025-11-10 10:00:21,910 [INFO] ApplicationLog: アプリが起動されました。
+2025-11-10 10:00:32,065 [INFO] ApplicationLog: {'message': '人事部に所属している従業員情報を一覧化して', 'application_mode': '社内問い合わせ'}
+2025-11-10 10:01:13,674 [ERROR] ApplicationLog: 過去の会話履歴の表示に失敗しました。
+string indices must be integers, not 'str'
+Traceback (most recent call last):
+  File "C:\Users\diva1\OneDrive\デスクトップ\company_inner_search_app\ダウンロード用\company_inner_search_app\main.py", line 119, in <module>
+    cn.display_conversation_log()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\diva1\OneDrive\デスクトップ\company_inner_search_app\ダウンロード用\company_inner_search_app\components.py", line 96, in display_conversation_log
+    if message["content"]["mode"] == ct.ANSWER_MODE_1:
+       ~~~~~~~~~~~~~~~~~~^^^^^^^^
+TypeError: string indices must be integers, not 'str'
+2025-11-10 10:01:30,572 [INFO] httpx: HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2025-11-10 10:01:31,844 [INFO] ApplicationLog: アプリが起動されました。
+2025-11-10 10:01:37,082 [INFO] ApplicationLog: {'message': ' 社員の育成方針に関するMTGの議事録', 'application_mode': '社内文書検索'}
+2025-11-10 10:01:47,048 [INFO] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-11-10 10:01:47,687 [INFO] httpx: HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2025-11-10 10:01:51,366 [INFO] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-11-10 10:01:51,374 [ERROR] ApplicationLog: 回答表示に失敗しました。
+'context'
+Traceback (most recent call last):
+  File "C:\Users\diva1\OneDrive\デスクトップ\company_inner_search_app\ダウンロード用\company_inner_search_app\main.py", line 348, in <module>
+    content = cn.display_search_llm_response(llm_response)
+  File "C:\Users\diva1\OneDrive\デスクトップ\company_inner_search_app\ダウンロード用\company_inner_search_app\components.py", line 144, in display_search_llm_response
+    if llm_response["context"] and llm_response["answer"] != ct.NO_DOC_MATCH_ANSWER:
+       ~~~~~~~~~~~~^^^^^^^^^^^
+KeyError: 'context'
+2025-11-10 10:07:40,600 [WARNING] langchain_community.utils.user_agent: USER_AGENT environment variable not set, consider setting it to identify your requests.
+2025-11-10 10:07:43,212 [INFO] chromadb.telemetry.product.posthog: Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-11-10 10:07:48,651 [INFO] httpx: HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2025-11-10 10:07:49,955 [INFO] ApplicationLog: アプリが起動されました。
+2025-11-10 10:08:01,266 [INFO] ApplicationLog: {'message': '社員の育成方針に関するMTGの議事録', 'application_mode': '社内文書検索'}
+2025-11-10 10:08:16,322 [INFO] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-11-10 10:08:17,920 [INFO] httpx: HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2025-11-10 10:08:19,039 [INFO] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-11-10 10:08:19,050 [ERROR] ApplicationLog: 回答表示に失敗しました。
+'context'
+Traceback (most recent call last):
+  File "C:\Users\diva1\OneDrive\デスクトップ\company_inner_search_app\ダウンロード用\company_inner_search_app\main.py", line 443, in <module>
+    content = cn.display_search_llm_response(llm_response)
+  File "C:\Users\diva1\OneDrive\デスクトップ\company_inner_search_app\ダウンロード用\company_inner_search_app\components.py", line 144, in display_search_llm_response
+    if llm_response["context"] and llm_response["answer"] != ct.NO_DOC_MATCH_ANSWER:
+       ~~~~~~~~~~~~^^^^^^^^^^^
+KeyError: 'context'
+2025-11-10 10:08:19,055 [INFO] ApplicationLog: {'message': '""', 'application_mode': '社内文書検索'}
+2025-11-10 10:12:01,147 [WARNING] langchain_community.utils.user_agent: USER_AGENT environment variable not set, consider setting it to identify your requests.
+2025-11-10 10:12:03,687 [INFO] chromadb.telemetry.product.posthog: Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-11-10 10:12:08,295 [INFO] httpx: HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2025-11-10 10:12:09,515 [INFO] ApplicationLog: アプリが起動されました。
+2025-11-10 10:12:17,953 [INFO] ApplicationLog: {'message': ' 社員の育成方針に関するMTGの議事録', 'application_mode': '社内文書検索'}
+2025-11-10 10:12:26,961 [INFO] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-11-10 10:12:27,537 [INFO] httpx: HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2025-11-10 10:12:28,259 [INFO] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-11-10 10:12:28,270 [INFO] ApplicationLog: {'message': {'mode': '社内文書検索', 'answer': '\n    入力内容と関連する社内文書が見つかりませんでした。\n\n    入力内容を変更してください。\n', 'no_file_path_flg': True}, 'application_mode': '社内文書検索'}
+2025-11-10 11:31:32,764 [WARNING] langchain_community.utils.user_agent: USER_AGENT environment variable not set, consider setting it to identify your requests.
+2025-11-10 11:31:35,557 [INFO] chromadb.telemetry.product.posthog: Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-11-10 11:31:40,590 [INFO] httpx: HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2025-11-10 11:31:41,857 [INFO] ApplicationLog: アプリが起動されました。
+2025-11-10 11:32:28,369 [INFO] ApplicationLog: {'message': '社員の育成方針に関するMTGの議事録はどこにありますか？', 'application_mode': '社内文書検索'}
+2025-11-10 11:32:32,328 [INFO] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-11-10 11:32:33,725 [INFO] httpx: HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2025-11-10 11:32:34,489 [INFO] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-11-10 11:32:34,499 [INFO] ApplicationLog: {'message': {'mode': '社内文書検索', 'main_message': '入力内容に関する情報は、以下のファイルに含まれている可能性があります。', 'main_file_path': './data\\MTG議事録\\教育\\教育ミーティング議事録.docx', 'sub_message': 'その他、ファイルありかの候補を提示します。', 'sub_choices': [{'source': './data\\MTG議事録\\採用\\採用ミーティング議事録.docx'}, {'source': './data\\MTG議事録\\議事録ルール.txt'}, {'source': './data\\MTG議事録\\全社\\全社ミーティング議事録.docx'}]}, 'application_mode': '社内文書検索'}
+2025-11-10 11:32:57,769 [INFO] ApplicationLog: {'message': '人事部の役割を簡潔にまとめて。', 'application_mode': '社内問い合わせ'}
+2025-11-10 11:33:01,213 [INFO] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-11-10 11:33:01,539 [INFO] httpx: HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2025-11-10 11:33:08,310 [INFO] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-11-10 11:33:08,326 [INFO] ApplicationLog: {'message': {'mode': '社内問い合わせ', 'answer': '### 人事部の役割\n\n人事部の主な役割は、以下の通りです：\n\n1. **採用戦略の策定**\n   - 営業部門の人材ニーズを把握し、効果的な採用戦略を具体化すること。\n   - 求める人材像の整理と、適切なアプローチ方法の検討。\n\n2. **社員育成の支援**\n   - 社員のスキルアップを図るための研修プログラムの実施。\n   - 定期的な1on1ミーティングを通じたフォローアップの強化。\n\n3. **パフォーマンス管理**\n   - 社員の成長を支援するため、教育プランの具体化や進捗確認の場を設ける。\n   - フィードバック文化の定着を促進し、継続的な成長をサポート。\n\n4. **組織文化の醸成**\n   - 社内のコミュニケーションを活性化し、協力的な職場環境を作り出す。\n   - 社員のキャリア目標と日常業務をリンクさせた教育の重要性を認識する。\n\nこれらの役割を通じて、人事部は企業の成長を支える重要な役割を果たしています。', 'message': '情報源', 'file_info_list': ['./data\\MTG議事録\\採用\\採用.pdf（ページNo.0）', './data\\MTG議事録\\全社\\全社.pdf（ページNo.6）', './data\\MTG議事録\\教育\\教育ミーティング議事録.docx']}, 'application_mode': '社内問い合わせ'}
+2025-11-10 11:33:23,436 [INFO] ApplicationLog: {'message': '人事部の従業員一覧を見せて。', 'application_mode': '社内問い合わせ'}
+2025-11-10 11:33:40,686 [ERROR] ApplicationLog: 過去の会話履歴の表示に失敗しました。
+string indices must be integers, not 'str'
+Traceback (most recent call last):
+  File "C:\Users\diva1\OneDrive\デスクトップ\company_inner_search_app\ダウンロード用\company_inner_search_app\main.py", line 119, in <module>
+    cn.display_conversation_log()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\diva1\OneDrive\デスクトップ\company_inner_search_app\ダウンロード用\company_inner_search_app\components.py", line 129, in display_conversation_log
+    if message["content"]["mode"] == ct.ANSWER_MODE_1:
+       ~~~~~~~~~~~~~~~~~~^^^^^^^^
+TypeError: string indices must be integers, not 'str'
+2025-11-10 11:33:57,222 [ERROR] ApplicationLog: 過去の会話履歴の表示に失敗しました。
+string indices must be integers, not 'str'
+Traceback (most recent call last):
+  File "C:\Users\diva1\OneDrive\デスクトップ\company_inner_search_app\ダウンロード用\company_inner_search_app\main.py", line 119, in <module>
+    cn.display_conversation_log()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\diva1\OneDrive\デスクトップ\company_inner_search_app\ダウンロード用\company_inner_search_app\components.py", line 129, in display_conversation_log
+    if message["content"]["mode"] == ct.ANSWER_MODE_1:
+       ~~~~~~~~~~~~~~~~~~^^^^^^^^
+TypeError: string indices must be integers, not 'str'
+2025-11-10 11:34:09,690 [INFO] httpx: HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2025-11-10 11:34:10,552 [INFO] ApplicationLog: アプリが起動されました。
+2025-11-10 11:34:14,800 [INFO] ApplicationLog: {'message': 'この会社のコンプライアンス方針を教えて。', 'application_mode': '社内文書検索'}
+2025-11-10 11:34:19,930 [INFO] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-11-10 11:34:20,953 [INFO] httpx: HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2025-11-10 11:34:22,382 [INFO] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-11-10 11:34:22,392 [INFO] ApplicationLog: {'message': {'mode': '社内文書検索', 'answer': '\n    入力内容と関連する社内文書が見つかりませんでした。\n\n    入力内容を変更してください。\n', 'no_file_path_flg': True}, 'application_mode': '社内文書検索'}
+2025-11-10 11:34:27,380 [INFO] ApplicationLog: {'message': 'この会社のコンプライアンス方針を教えて。', 'application_mode': '社内問い合わせ'}
+2025-11-10 11:34:29,687 [INFO] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-11-10 11:34:30,969 [INFO] httpx: HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2025-11-10 11:34:31,607 [INFO] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-11-10 11:34:31,638 [INFO] ApplicationLog: {'message': {'mode': '社内問い合わせ', 'answer': '該当資料なし', 'message': '情報源', 'file_info_list': ['./data\\MTG議事録\\採用\\採用.pdf（ページNo.0）', './data\\MTG議事録\\全社\\全社.pdf（ページNo.6）']}, 'application_mode': '社内問い合わせ'}
+2025-11-10 11:34:43,814 [INFO] ApplicationLog: {'message': 'この会社の教育制度のポイントを3つ教えて。', 'application_mode': '社内問い合わせ'}
+2025-11-10 11:34:47,770 [INFO] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-11-10 11:34:48,268 [INFO] httpx: HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2025-11-10 11:34:54,101 [INFO] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-11-10 11:34:54,119 [INFO] ApplicationLog: {'message': {'mode': '社内問い合わせ', 'answer': '### この会社の教育制度のポイント\n\n1. **実践的な研修内容の強化**\n   - ロールプレイやグループワークを導入し、参加型の研修を通じて実践的なスキルを強化することを目指しています。このアプローチにより、社員がリアルなシナリオでの体験を通じて学びを深めることが期待されています。\n\n2. **1on1ミーティングの定期実施**\n   - フォローアップを強化するために、月に1回の1on1ミーティングを実施します。このミーティングでは、個々の進捗や課題を確認し、必要な支援を行うことで、社員の成長を促進します。\n\n3. **定期的なテクニカルスキル研修**\n   - テクニカルスキル向上のための定期ワークショップを開催し、技術的な知識やスキルを向上させる機会を提供します。これにより、社員の専門性を高め、業務におけるパフォーマンス向上を図ります。 \n\nこれらのポイントは、社員の成長支援を目的とした教育プランの具体化に基づいており、キャリア目標と日常業務をリンクさせた教育の重要性も強調されています。', 'message': '情報源', 'file_info_list': ['./data\\MTG議事録\\教育\\教育ミーティング議事録.docx', './data\\MTG議事録\\教育\\教育.pdf（ページNo.0）']}, 'application_mode': '社内問い合わせ'}
+2025-11-10 12:01:19,105 [WARNING] langchain_community.utils.user_agent: USER_AGENT environment variable not set, consider setting it to identify your requests.
+2025-11-10 12:01:19,296 [ERROR] ApplicationLog: 初期化処理に失敗しました。
+No module named 'chardet'
+Traceback (most recent call last):
+  File "C:\Users\diva1\OneDrive\デスクトップ\company_inner_search_app\ダウンロード用\company_inner_search_app\.venv\Lib\site-packages\langchain_community\document_loaders\text.py", line 43, in lazy_load
+    text = f.read()
+UnicodeDecodeError: 'cp932' codec can't decode byte 0x85 in position 11: illegal multibyte sequence
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\diva1\OneDrive\デスクトップ\company_inner_search_app\ダウンロード用\company_inner_search_app\main.py", line 54, in <module>
+    initialize()
+    ~~~~~~~~~~^^
+  File "C:\Users\diva1\OneDrive\デスクトップ\company_inner_search_app\ダウンロード用\company_inner_search_app\initialize.py", line 45, in initialize
+    initialize_retriever()
+    ~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\diva1\OneDrive\デスクトップ\company_inner_search_app\ダウンロード用\company_inner_search_app\initialize.py", line 88, in initialize_retriever
+    docs_all = load_data_sources()
+  File "C:\Users\diva1\OneDrive\デスクトップ\company_inner_search_app\ダウンロード用\company_inner_search_app\initialize.py", line 133, in load_data_sources
+    recursive_file_check(ct.RAG_TOP_FOLDER_PATH, docs_all)
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\diva1\OneDrive\デスクトップ\company_inner_search_app\ダウンロード用\company_inner_search_app\initialize.py", line 153, in recursive_file_check
+    recursive_file_check(full_path, docs_all)
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\diva1\OneDrive\デスクトップ\company_inner_search_app\ダウンロード用\company_inner_search_app\initialize.py", line 153, in recursive_file_check
+    recursive_file_check(full_path, docs_all)
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\diva1\OneDrive\デスクトップ\company_inner_search_app\ダウンロード用\company_inner_search_app\initialize.py", line 155, in recursive_file_check
+    file_load(path, docs_all)
+    ~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "C:\Users\diva1\OneDrive\デスクトップ\company_inner_search_app\ダウンロード用\company_inner_search_app\initialize.py", line 207, in file_load
+    docs = loader.load()
+  File "C:\Users\diva1\OneDrive\デスクトップ\company_inner_search_app\ダウンロード用\company_inner_search_app\.venv\Lib\site-packages\langchain_core\document_loaders\base.py", line 43, in load
+    return list(self.lazy_load())
+  File "C:\Users\diva1\OneDrive\デスクトップ\company_inner_search_app\ダウンロード用\company_inner_search_app\.venv\Lib\site-packages\langchain_community\document_loaders\text.py", line 46, in lazy_load
+    detected_encodings = detect_file_encodings(self.file_path)
+  File "C:\Users\diva1\OneDrive\デスクトップ\company_inner_search_app\ダウンロード用\company_inner_search_app\.venv\Lib\site-packages\langchain_community\document_loaders\helpers.py", line 31, in detect_file_encodings
+    import chardet
+ModuleNotFoundError: No module named 'chardet'
+2025-11-10 12:04:08,761 [WARNING] langchain_community.utils.user_agent: USER_AGENT environment variable not set, consider setting it to identify your requests.
+2025-11-10 12:04:11,387 [INFO] chromadb.telemetry.product.posthog: Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-11-10 12:04:16,069 [INFO] httpx: HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2025-11-10 12:04:17,513 [INFO] ApplicationLog: アプリが起動されました。
+2025-11-10 12:05:53,590 [WARNING] langchain_community.utils.user_agent: USER_AGENT environment variable not set, consider setting it to identify your requests.
+2025-11-10 12:05:56,232 [INFO] chromadb.telemetry.product.posthog: Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-11-10 12:06:00,706 [INFO] httpx: HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2025-11-10 12:06:01,913 [INFO] ApplicationLog: アプリが起動されました。
+2025-11-10 12:06:41,929 [INFO] ApplicationLog: {'message': '教育方針に関する議事録を探して', 'application_mode': '社内文書検索'}
+2025-11-10 12:06:49,821 [INFO] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-11-10 12:06:50,689 [INFO] httpx: HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2025-11-10 12:07:08,700 [INFO] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-11-10 12:07:08,713 [INFO] ApplicationLog: {'message': {'mode': '社内問い合わせ', 'answer': '### 教育方針に関する議事録\n\n#### 1. 基本情報\n- **ミーティング名称**: 社員教育・育成方針会議\n- **日時**: 2024年1月XX日 13:00 - 15:00\n- **場所**: オンライン（Zoom）\n- **出席者**:\n  - 佐藤和也（取締役）\n  - 中村美咲（人事部）\n  - 田中亮（技術教育担当）\n- **欠席者**: なし\n- **議事録作成者**: 中村美咲\n\n#### 2. アジェンダ\n1. 現状の教育プログラムの確認\n2. 各自の意見・提案\n3. 今後の教育・育成方針の策定\n4. アクションプランの策定\n\n#### 3. 議題ごとの記録\n\n##### 3.1 現状の教育プログラムの確認\n- **議論内容**:\n  - 新入社員向け研修は好評だが、実践的な内容の強化が課題。\n  - リーダーシップ研修は良好な反応だが、フォローアップが不十分。\n  - テクニカルスキル向上のワークショップは好評も、頻度が少ない。\n  \n- **意見**:\n  - 佐藤: 実践的な内容やフォローアップの重要性を強調。\n  - 中村: ロールプレイやグループワークで実践的なスキルを強化。\n  - 田中: 定期的なワークショップ開催の必要性を指摘。\n  \n- **結論**:\n  - 実践的な内容、フォローアップ強化、ワークショップ頻度向上が必要。\n\n##### 3.2 各自の意見・提案\n- **議論内容**:\n  - ロールプレイやグループワークの導入が提案された。\n  \n- **意見**:\n  - 鈴木健: コンテンツカレンダーを作成し、定期的に情報を発信することが効果的。\n  - 田中由美: 説明会の日程として来月の中旬が良いと提案。オンライン形式が参加しやすいと指摘。\n  - 松本亮: オンライン形式の利便性を支持。\n\n#### 4. アクションアイテム\n- **タスク内容**: 実践的な研修内容の強化、フォローアップの施策検討\n- **担当者**: 中村美咲\n- **期限**: 次回会議までに\n\nこの議事録は、教育方針に関する重要な情報を整理し、今後の方針策定に役立てるためのものです。', 'message': '情報源', 'file_info_list': ['./data\\MTG議事録\\議事録ルール.txt', './data\\MTG議事録\\教育\\教育ミーティング議事録.docx', './data\\MTG議事録\\採用\\採用.pdf（ページNo.3）', './data\\MTG議事録\\マーケティング\\マーケティングミーティング議事録.docx']}, 'application_mode': '社内問い合わせ'}
+2025-11-10 12:07:45,651 [INFO] ApplicationLog: {'message': '営業部の今期の目標について教えて', 'application_mode': '社内問い合わせ'}
+2025-11-10 12:07:53,864 [INFO] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-11-10 12:07:54,981 [INFO] httpx: HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2025-11-10 12:08:04,862 [INFO] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-11-10 12:08:04,870 [INFO] ApplicationLog: {'message': {'mode': '社内問い合わせ', 'answer': '### 営業部の今期の目標\n\n#### 1. 新規顧客獲得\n- **目標達成状況**: 営業部門は、新規顧客獲得キャンペーンで目標の150%を達成しました。この成功は、営業チームの努力と戦略的なアプローチによるものです。\n\n#### 2. 顧客満足度の向上\n- **課題**: 競合との価格競争が激化しているため、顧客満足度の向上が必要です。顧客との関係強化やアンケート調査の実施が改善策として挙げられています。\n\n#### 3. 短期目標\n- **オンラインサービスの立ち上げ**: 3か月以内にオンラインサービスを立ち上げることが短期目標です。これにより新規顧客を獲得し、売上の向上を図ります。\n\n#### 4. 長期目標\n- **ブランド価値向上**: 長期的には、ブランド価値を高め、業界内でのリーダーシップを確立することを目指します。\n\n#### 5. 施策\n- **デジタルトランスフォーメーションの推進**: 営業部門は、デジタルトランスフォーメーションを進めることで、営業の効率化や情報共有の向上を図っています。\n\n#### 6. アクションアイテム\n- **具体的なタスク**:\n  - オンラインサービス立ち上げ計画策定（担当: 田中亮、期限: 2024/2/10）\n  - 顧客アンケート調査の実施計画（担当: 中村美咲、期限: 2024/2/15）\n  - デジタルトランスフォーメーション推進体制構築（担当: 鈴木和也、期限: 2024/2/20）\n\nこれらの目標と施策を通じて、営業部は顧客満足度の向上と新規顧客の獲得を目指しています。', 'message': '情報源', 'file_info_list': ['./data\\MTG議事録\\全社\\全社ミーティング議事録.docx', './data\\MTG議事録\\全社\\全社.pdf（ページNo.5）']}, 'application_mode': '社内問い合わせ'}
+2025-11-10 12:09:02,515 [INFO] ApplicationLog: {'message': 'マーケティング部のミーティング議事録を探して', 'application_mode': '社内文書検索'}
+2025-11-10 12:09:16,399 [INFO] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 502 Bad Gateway"
+2025-11-10 12:09:16,400 [INFO] openai._base_client: Retrying request to /chat/completions in 0.489944 seconds
+2025-11-10 12:09:37,338 [INFO] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-11-10 12:09:37,939 [INFO] httpx: HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2025-11-10 12:09:38,817 [INFO] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-11-10 12:09:38,832 [INFO] ApplicationLog: {'message': {'mode': '社内文書検索', 'main_message': '入力内容に関する情報は、以下のファイルに含まれている可能性があります。', 'main_file_path': './data\\MTG議事録\\マーケティング\\マーケティングミーティング議事録.docx', 'sub_message': 'その他、ファイルありかの候補を提示します。', 'sub_choices': [{'source': './data\\MTG議事録\\営業\\営業ミーティング議事録.docx'}, {'source': './data\\MTG議事録\\顧客\\既存\\ブルースカイ・マーケティング株式会社\\ブルースカイ・マーケティング株式会社ミーティング議事録.docx'}, {'source': './data\\MTG議事録\\採用\\採用ミーティング議事録.docx'}, {'source': './data\\MTG議事録\\全社\\全社ミーティング議事録.docx'}]}, 'application_mode': '社内文書検索'}
+2025-11-11 15:46:10,560 [WARNING] langchain_community.utils.user_agent: USER_AGENT environment variable not set, consider setting it to identify your requests.
+2025-11-11 15:46:11,645 [INFO] ApplicationLog: 初回起動 → 全文書を読み込み、埋め込み生成します
+2025-11-11 15:46:12,768 [INFO] chromadb.telemetry.product.posthog: Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-11-11 15:46:16,012 [INFO] httpx: HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 429 Too Many Requests"
+2025-11-11 15:46:16,014 [INFO] openai._base_client: Retrying request to /embeddings in 0.401108 seconds
+2025-11-11 15:46:18,298 [INFO] httpx: HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 429 Too Many Requests"
+2025-11-11 15:46:18,300 [INFO] openai._base_client: Retrying request to /embeddings in 0.752157 seconds
+2025-11-11 15:46:21,978 [INFO] httpx: HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 429 Too Many Requests"
+2025-11-11 15:46:21,981 [ERROR] ApplicationLog: 初期化エラー
+Traceback (most recent call last):
+  File "C:\Users\diva1\OneDrive\デスクトップ\company_inner_search_app\ダウンロード用\company_inner_search_app\initialize.py", line 178, in initialize_retriever
+    db = Chroma.from_documents(
+        splitted_docs,
+        embedding=embeddings,
+        persist_directory=persist_dir,  # [PATCH] 永続化
+    )
+  File "C:\Users\diva1\OneDrive\デスクトップ\company_inner_search_app\ダウンロード用\company_inner_search_app\.venv\Lib\site-packages\langchain_community\vectorstores\chroma.py", line 887, in from_documents
+    return cls.from_texts(
+           ~~~~~~~~~~~~~~^
+        texts=texts,
+        ^^^^^^^^^^^^
+    ...<8 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    )
+    ^
+  File "C:\Users\diva1\OneDrive\デスクトップ\company_inner_search_app\ダウンロード用\company_inner_search_app\.venv\Lib\site-packages\langchain_community\vectorstores\chroma.py", line 843, in from_texts
+    chroma_collection.add_texts(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        texts=batch[3] if batch[3] else [],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        metadatas=batch[2] if batch[2] else None,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        ids=batch[0],
+        ^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\diva1\OneDrive\デスクトップ\company_inner_search_app\ダウンロード用\company_inner_search_app\.venv\Lib\site-packages\langchain_community\vectorstores\chroma.py", line 277, in add_texts
+    embeddings = self._embedding_function.embed_documents(texts)
+  File "C:\Users\diva1\OneDrive\デスクトップ\company_inner_search_app\ダウンロード用\company_inner_search_app\.venv\Lib\site-packages\langchain_openai\embeddings\base.py", line 625, in embed_documents
+    return self._get_len_safe_embeddings(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        texts, engine=engine, chunk_size=chunk_size, **kwargs
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\diva1\OneDrive\デスクトップ\company_inner_search_app\ダウンロード用\company_inner_search_app\.venv\Lib\site-packages\langchain_openai\embeddings\base.py", line 514, in _get_len_safe_embeddings
+    response = self.client.create(
+        input=tokens[i : i + _chunk_size], **client_kwargs
+    )
+  File "C:\Users\diva1\OneDrive\デスクトップ\company_inner_search_app\ダウンロード用\company_inner_search_app\.venv\Lib\site-packages\openai\resources\embeddings.py", line 132, in create
+    return self._post(
+           ~~~~~~~~~~^
+        "/embeddings",
+        ^^^^^^^^^^^^^^
+    ...<8 lines>...
+        cast_to=CreateEmbeddingResponse,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\diva1\OneDrive\デスクトップ\company_inner_search_app\ダウンロード用\company_inner_search_app\.venv\Lib\site-packages\openai\_base_client.py", line 1259, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+                           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\diva1\OneDrive\デスクトップ\company_inner_search_app\ダウンロード用\company_inner_search_app\.venv\Lib\site-packages\openai\_base_client.py", line 1047, in request
+    raise self._make_status_error_from_response(err.response) from None
+openai.RateLimitError: Error code: 429 - {'error': {'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.', 'type': 'insufficient_quota', 'param': None, 'code': 'insufficient_quota'}}
+2025-11-11 15:46:21,992 [ERROR] ApplicationLog: 初期化処理に失敗しました。
+Error code: 429 - {'error': {'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.', 'type': 'insufficient_quota', 'param': None, 'code': 'insufficient_quota'}}
+Traceback (most recent call last):
+  File "C:\Users\diva1\OneDrive\デスクトップ\company_inner_search_app\ダウンロード用\company_inner_search_app\main.py", line 94, in <module>
+    initialize()
+    ~~~~~~~~~~^^
+  File "C:\Users\diva1\OneDrive\デスクトップ\company_inner_search_app\ダウンロード用\company_inner_search_app\initialize.py", line 204, in initialize
+    initialize_retriever()
+    ~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\diva1\OneDrive\デスクトップ\company_inner_search_app\ダウンロード用\company_inner_search_app\initialize.py", line 193, in initialize_retriever
+    raise e
+  File "C:\Users\diva1\OneDrive\デスクトップ\company_inner_search_app\ダウンロード用\company_inner_search_app\initialize.py", line 178, in initialize_retriever
+    db = Chroma.from_documents(
+        splitted_docs,
+        embedding=embeddings,
+        persist_directory=persist_dir,  # [PATCH] 永続化
+    )
+  File "C:\Users\diva1\OneDrive\デスクトップ\company_inner_search_app\ダウンロード用\company_inner_search_app\.venv\Lib\site-packages\langchain_community\vectorstores\chroma.py", line 887, in from_documents
+    return cls.from_texts(
+           ~~~~~~~~~~~~~~^
+        texts=texts,
+        ^^^^^^^^^^^^
+    ...<8 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    )
+    ^
+  File "C:\Users\diva1\OneDrive\デスクトップ\company_inner_search_app\ダウンロード用\company_inner_search_app\.venv\Lib\site-packages\langchain_community\vectorstores\chroma.py", line 843, in from_texts
+    chroma_collection.add_texts(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        texts=batch[3] if batch[3] else [],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        metadatas=batch[2] if batch[2] else None,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        ids=batch[0],
+        ^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\diva1\OneDrive\デスクトップ\company_inner_search_app\ダウンロード用\company_inner_search_app\.venv\Lib\site-packages\langchain_community\vectorstores\chroma.py", line 277, in add_texts
+    embeddings = self._embedding_function.embed_documents(texts)
+  File "C:\Users\diva1\OneDrive\デスクトップ\company_inner_search_app\ダウンロード用\company_inner_search_app\.venv\Lib\site-packages\langchain_openai\embeddings\base.py", line 625, in embed_documents
+    return self._get_len_safe_embeddings(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        texts, engine=engine, chunk_size=chunk_size, **kwargs
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\diva1\OneDrive\デスクトップ\company_inner_search_app\ダウンロード用\company_inner_search_app\.venv\Lib\site-packages\langchain_openai\embeddings\base.py", line 514, in _get_len_safe_embeddings
+    response = self.client.create(
+        input=tokens[i : i + _chunk_size], **client_kwargs
+    )
+  File "C:\Users\diva1\OneDrive\デスクトップ\company_inner_search_app\ダウンロード用\company_inner_search_app\.venv\Lib\site-packages\openai\resources\embeddings.py", line 132, in create
+    return self._post(
+           ~~~~~~~~~~^
+        "/embeddings",
+        ^^^^^^^^^^^^^^
+    ...<8 lines>...
+        cast_to=CreateEmbeddingResponse,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\diva1\OneDrive\デスクトップ\company_inner_search_app\ダウンロード用\company_inner_search_app\.venv\Lib\site-packages\openai\_base_client.py", line 1259, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+                           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\diva1\OneDrive\デスクトップ\company_inner_search_app\ダウンロード用\company_inner_search_app\.venv\Lib\site-packages\openai\_base_client.py", line 1047, in request
+    raise self._make_status_error_from_response(err.response) from None
+openai.RateLimitError: Error code: 429 - {'error': {'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.', 'type': 'insufficient_quota', 'param': None, 'code': 'insufficient_quota'}}
+2025-11-11 15:49:09,533 [WARNING] langchain_community.utils.user_agent: USER_AGENT environment variable not set, consider setting it to identify your requests.
+2025-11-11 15:49:10,506 [INFO] ApplicationLog: 永続化済 Chroma をロード: ./chroma_store
+2025-11-11 15:49:10,855 [INFO] chromadb.telemetry.product.posthog: Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-11-11 15:49:10,956 [INFO] ApplicationLog: アプリが起動されました。
+2025-11-11 17:04:42,457 [WARNING] langchain_community.utils.user_agent: USER_AGENT environment variable not set, consider setting it to identify your requests.
+2025-11-11 17:04:43,550 [INFO] ApplicationLog: 永続化済 Chroma をロード: ./chroma_store
+2025-11-11 17:04:44,009 [INFO] chromadb.telemetry.product.posthog: Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-11-11 17:04:44,126 [INFO] ApplicationLog: アプリが起動されました。
+2025-11-11 17:06:52,205 [WARNING] langchain_community.utils.user_agent: USER_AGENT environment variable not set, consider setting it to identify your requests.
+2025-11-11 17:06:53,123 [INFO] ApplicationLog: 永続化済 Chroma をロード: ./chroma_store
+2025-11-11 17:06:53,486 [INFO] chromadb.telemetry.product.posthog: Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-11-11 17:06:53,583 [INFO] ApplicationLog: アプリが起動されました。
+2025-11-11 17:08:41,275 [WARNING] langchain_community.utils.user_agent: USER_AGENT environment variable not set, consider setting it to identify your requests.
+2025-11-11 17:08:42,150 [INFO] ApplicationLog: 永続化済 Chroma をロード: ./chroma_store
+2025-11-11 17:08:42,494 [INFO] chromadb.telemetry.product.posthog: Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-11-11 17:08:42,588 [INFO] ApplicationLog: アプリが起動されました。
+2025-11-11 17:11:28,295 [WARNING] langchain_community.utils.user_agent: USER_AGENT environment variable not set, consider setting it to identify your requests.
+2025-11-11 17:11:29,289 [INFO] ApplicationLog: 永続化済 Chroma をロード: ./chroma_store
+2025-11-11 17:11:29,640 [INFO] chromadb.telemetry.product.posthog: Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-11-11 17:11:29,739 [INFO] ApplicationLog: アプリが起動されました。
+2025-11-11 17:13:18,954 [INFO] ApplicationLog: 永続化済 Chroma をロード: ./chroma_store
+2025-11-11 17:13:18,984 [INFO] ApplicationLog: アプリが起動されました。
+2025-11-11 17:13:39,316 [INFO] ApplicationLog: {'message': '人事部に所属している従業員情報を一覧化して', 'application_mode': '社内文書検索'}
+2025-11-11 17:13:39,318 [ERROR] ApplicationLog: 回答生成に失敗しました。
+name '_ensure_retriever_lazy' is not defined
+Traceback (most recent call last):
+  File "C:\Users\diva1\OneDrive\デスクトップ\company_inner_search_app\ダウンロード用\company_inner_search_app\main.py", line 560, in <module>
+    if not _ensure_retriever_lazy():
+           ^^^^^^^^^^^^^^^^^^^^^^
+NameError: name '_ensure_retriever_lazy' is not defined
+2025-11-11 17:13:48,810 [INFO] ApplicationLog: {'message': '人事部に所属している従業員情報を一覧化して', 'application_mode': '社内問い合わせ'}
+2025-11-11 17:13:57,865 [ERROR] ApplicationLog: 過去の会話履歴の表示に失敗しました。
+string indices must be integers, not 'str'
+Traceback (most recent call last):
+  File "C:\Users\diva1\OneDrive\デスクトップ\company_inner_search_app\ダウンロード用\company_inner_search_app\main.py", line 215, in <module>
+    cn.display_conversation_log()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\diva1\OneDrive\デスクトップ\company_inner_search_app\ダウンロード用\company_inner_search_app\components.py", line 129, in display_conversation_log
+    if message["content"]["mode"] == ct.ANSWER_MODE_1:
+       ~~~~~~~~~~~~~~~~~~^^^^^^^^
+TypeError: string indices must be integers, not 'str'
+2025-11-11 17:20:05,504 [WARNING] langchain_community.utils.user_agent: USER_AGENT environment variable not set, consider setting it to identify your requests.
+2025-11-11 17:20:06,510 [INFO] ApplicationLog: 永続化済 Chroma をロード: ./chroma_store
+2025-11-11 17:20:06,947 [INFO] chromadb.telemetry.product.posthog: Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-11-11 17:20:07,059 [INFO] ApplicationLog: アプリが起動されました。
+2025-11-11 17:22:01,758 [WARNING] langchain_community.utils.user_agent: USER_AGENT environment variable not set, consider setting it to identify your requests.
+2025-11-11 17:22:02,820 [INFO] ApplicationLog: 永続化済 Chroma をロード: ./chroma_store
+2025-11-11 17:22:03,200 [INFO] chromadb.telemetry.product.posthog: Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-11-11 17:22:03,296 [INFO] ApplicationLog: アプリが起動されました。
+2025-11-11 17:22:12,614 [INFO] ApplicationLog: 永続化済 Chroma をロード: ./chroma_store
+2025-11-11 17:22:12,643 [INFO] ApplicationLog: アプリが起動されました。
+2025-11-11 17:25:55,086 [WARNING] langchain_community.utils.user_agent: USER_AGENT environment variable not set, consider setting it to identify your requests.
+2025-11-11 17:25:55,992 [INFO] ApplicationLog: 永続化済 Chroma をロード: ./chroma_store
+2025-11-11 17:25:56,364 [INFO] chromadb.telemetry.product.posthog: Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-11-11 17:25:56,459 [INFO] ApplicationLog: アプリが起動されました。
+2025-11-11 20:37:09,407 [WARNING] langchain_community.utils.user_agent: USER_AGENT environment variable not set, consider setting it to identify your requests.
+2025-11-11 20:37:10,530 [INFO] ApplicationLog: 永続化済 Chroma をロード: ./chroma_store
+2025-11-11 20:37:11,098 [INFO] chromadb.telemetry.product.posthog: Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-11-11 20:37:11,250 [INFO] ApplicationLog: アプリが起動されました。
+2025-11-11 20:37:21,955 [INFO] ApplicationLog: {'message': '「社員の育成方針を要約して、重要ポイントを3つ教えて。', 'application_mode': '社内文書検索'}
+2025-11-11 20:37:22,588 [ERROR] ApplicationLog: 回答生成に失敗しました。
+st.session_state has no attribute "chat_history". Did you forget to initialize it? More info: https://docs.streamlit.io/develop/concepts/architecture/session-state#initialization
+Traceback (most recent call last):
+  File "C:\Users\diva1\OneDrive\デスクトップ\company_inner_search_app\ダウンロード用\company_inner_search_app\.venv\Lib\site-packages\streamlit\runtime\state\session_state.py", line 471, in __getitem__
+    base_value = self._getitem(widget_id, key)
+  File "C:\Users\diva1\OneDrive\デスクトップ\company_inner_search_app\ダウンロード用\company_inner_search_app\.venv\Lib\site-packages\streamlit\runtime\state\session_state.py", line 524, in _getitem
+    raise KeyError
+KeyError
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\diva1\OneDrive\デスクトップ\company_inner_search_app\ダウンロード用\company_inner_search_app\.venv\Lib\site-packages\streamlit\runtime\state\session_state_proxy.py", line 130, in __getattr__
+    return self[key]
+           ~~~~^^^^^
+  File "C:\Users\diva1\OneDrive\デスクトップ\company_inner_search_app\ダウンロード用\company_inner_search_app\.venv\Lib\site-packages\streamlit\runtime\state\session_state_proxy.py", line 101, in __getitem__
+    return get_session_state()[key]
+           ~~~~~~~~~~~~~~~~~~~^^^^^
+  File "C:\Users\diva1\OneDrive\デスクトップ\company_inner_search_app\ダウンロード用\company_inner_search_app\.venv\Lib\site-packages\streamlit\runtime\state\safe_session_state.py", line 104, in __getitem__
+    return self._state[key]
+           ~~~~~~~~~~~^^^^^
+  File "C:\Users\diva1\OneDrive\デスクトップ\company_inner_search_app\ダウンロード用\company_inner_search_app\.venv\Lib\site-packages\streamlit\runtime\state\session_state.py", line 478, in __getitem__
+    raise KeyError(_missing_key_error_message(key))
+KeyError: 'st.session_state has no key "chat_history". Did you forget to initialize it? More info: https://docs.streamlit.io/develop/concepts/architecture/session-state#initialization'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\diva1\OneDrive\デスクトップ\company_inner_search_app\ダウンロード用\company_inner_search_app\main.py", line 537, in <module>
+    llm_response = utils.get_llm_response(chat_message, mode=auto_mode)
+  File "C:\Users\diva1\OneDrive\デスクトップ\company_inner_search_app\ダウンロード用\company_inner_search_app\utils.py", line 379, in get_llm_response
+    {"input": chat_message, "chat_history": st.session_state.chat_history}
+                                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\diva1\OneDrive\デスクトップ\company_inner_search_app\ダウンロード用\company_inner_search_app\.venv\Lib\site-packages\streamlit\runtime\state\session_state_proxy.py", line 132, in __getattr__
+    raise AttributeError(_missing_attr_error_message(key))
+AttributeError: st.session_state has no attribute "chat_history". Did you forget to initialize it? More info: https://docs.streamlit.io/develop/concepts/architecture/session-state#initialization
+2025-11-11 20:38:37,407 [INFO] ApplicationLog: 永続化済 Chroma をロード: ./chroma_store
+2025-11-11 20:38:37,448 [INFO] ApplicationLog: アプリが起動されました。
+2025-11-11 20:39:22,704 [INFO] ApplicationLog: {'message': '社員の育成方針を要約して、重要ポイントを3つ教えて。', 'application_mode': '社内文書検索'}
+2025-11-11 20:39:22,706 [ERROR] ApplicationLog: 回答生成に失敗しました。
+st.session_state has no attribute "chat_history". Did you forget to initialize it? More info: https://docs.streamlit.io/develop/concepts/architecture/session-state#initialization
+Traceback (most recent call last):
+  File "C:\Users\diva1\OneDrive\デスクトップ\company_inner_search_app\ダウンロード用\company_inner_search_app\.venv\Lib\site-packages\streamlit\runtime\state\session_state.py", line 471, in __getitem__
+    base_value = self._getitem(widget_id, key)
+  File "C:\Users\diva1\OneDrive\デスクトップ\company_inner_search_app\ダウンロード用\company_inner_search_app\.venv\Lib\site-packages\streamlit\runtime\state\session_state.py", line 524, in _getitem
+    raise KeyError
+KeyError
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\diva1\OneDrive\デスクトップ\company_inner_search_app\ダウンロード用\company_inner_search_app\.venv\Lib\site-packages\streamlit\runtime\state\session_state_proxy.py", line 130, in __getattr__
+    return self[key]
+           ~~~~^^^^^
+  File "C:\Users\diva1\OneDrive\デスクトップ\company_inner_search_app\ダウンロード用\company_inner_search_app\.venv\Lib\site-packages\streamlit\runtime\state\session_state_proxy.py", line 101, in __getitem__
+    return get_session_state()[key]
+           ~~~~~~~~~~~~~~~~~~~^^^^^
+  File "C:\Users\diva1\OneDrive\デスクトップ\company_inner_search_app\ダウンロード用\company_inner_search_app\.venv\Lib\site-packages\streamlit\runtime\state\safe_session_state.py", line 104, in __getitem__
+    return self._state[key]
+           ~~~~~~~~~~~^^^^^
+  File "C:\Users\diva1\OneDrive\デスクトップ\company_inner_search_app\ダウンロード用\company_inner_search_app\.venv\Lib\site-packages\streamlit\runtime\state\session_state.py", line 478, in __getitem__
+    raise KeyError(_missing_key_error_message(key))
+KeyError: 'st.session_state has no key "chat_history". Did you forget to initialize it? More info: https://docs.streamlit.io/develop/concepts/architecture/session-state#initialization'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\diva1\OneDrive\デスクトップ\company_inner_search_app\ダウンロード用\company_inner_search_app\main.py", line 537, in <module>
+    llm_response = utils.get_llm_response(chat_message, mode=auto_mode)
+  File "C:\Users\diva1\OneDrive\デスクトップ\company_inner_search_app\ダウンロード用\company_inner_search_app\utils.py", line 379, in get_llm_response
+    {"input": chat_message, "chat_history": st.session_state.chat_history}
+                                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\diva1\OneDrive\デスクトップ\company_inner_search_app\ダウンロード用\company_inner_search_app\.venv\Lib\site-packages\streamlit\runtime\state\session_state_proxy.py", line 132, in __getattr__
+    raise AttributeError(_missing_attr_error_message(key))
+AttributeError: st.session_state has no attribute "chat_history". Did you forget to initialize it? More info: https://docs.streamlit.io/develop/concepts/architecture/session-state#initialization
+2025-11-11 20:43:39,370 [WARNING] langchain_community.utils.user_agent: USER_AGENT environment variable not set, consider setting it to identify your requests.
+2025-11-11 20:43:40,288 [INFO] ApplicationLog: 永続化済 Chroma をロード: ./chroma_store
+2025-11-11 20:43:40,668 [INFO] chromadb.telemetry.product.posthog: Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-11-11 20:43:40,772 [INFO] ApplicationLog: アプリが起動されました。
+2025-11-11 20:43:50,850 [INFO] ApplicationLog: {'message': '社員の育成方針を要約して、重要ポイントを3つ教えて。', 'application_mode': '社内文書検索'}
+2025-11-11 20:43:51,490 [ERROR] ApplicationLog: 回答生成に失敗しました。
+st.session_state has no attribute "chat_history". Did you forget to initialize it? More info: https://docs.streamlit.io/develop/concepts/architecture/session-state#initialization
+Traceback (most recent call last):
+  File "C:\Users\diva1\OneDrive\デスクトップ\company_inner_search_app\ダウンロード用\company_inner_search_app\.venv\Lib\site-packages\streamlit\runtime\state\session_state.py", line 471, in __getitem__
+    base_value = self._getitem(widget_id, key)
+  File "C:\Users\diva1\OneDrive\デスクトップ\company_inner_search_app\ダウンロード用\company_inner_search_app\.venv\Lib\site-packages\streamlit\runtime\state\session_state.py", line 524, in _getitem
+    raise KeyError
+KeyError
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\diva1\OneDrive\デスクトップ\company_inner_search_app\ダウンロード用\company_inner_search_app\.venv\Lib\site-packages\streamlit\runtime\state\session_state_proxy.py", line 130, in __getattr__
+    return self[key]
+           ~~~~^^^^^
+  File "C:\Users\diva1\OneDrive\デスクトップ\company_inner_search_app\ダウンロード用\company_inner_search_app\.venv\Lib\site-packages\streamlit\runtime\state\session_state_proxy.py", line 101, in __getitem__
+    return get_session_state()[key]
+           ~~~~~~~~~~~~~~~~~~~^^^^^
+  File "C:\Users\diva1\OneDrive\デスクトップ\company_inner_search_app\ダウンロード用\company_inner_search_app\.venv\Lib\site-packages\streamlit\runtime\state\safe_session_state.py", line 104, in __getitem__
+    return self._state[key]
+           ~~~~~~~~~~~^^^^^
+  File "C:\Users\diva1\OneDrive\デスクトップ\company_inner_search_app\ダウンロード用\company_inner_search_app\.venv\Lib\site-packages\streamlit\runtime\state\session_state.py", line 478, in __getitem__
+    raise KeyError(_missing_key_error_message(key))
+KeyError: 'st.session_state has no key "chat_history". Did you forget to initialize it? More info: https://docs.streamlit.io/develop/concepts/architecture/session-state#initialization'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\diva1\OneDrive\デスクトップ\company_inner_search_app\ダウンロード用\company_inner_search_app\main.py", line 537, in <module>
+    llm_response = utils.get_llm_response(chat_message, mode=auto_mode)
+  File "C:\Users\diva1\OneDrive\デスクトップ\company_inner_search_app\ダウンロード用\company_inner_search_app\utils.py", line 379, in get_llm_response
+    {"input": chat_message, "chat_history": st.session_state.chat_history}
+                                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\diva1\OneDrive\デスクトップ\company_inner_search_app\ダウンロード用\company_inner_search_app\.venv\Lib\site-packages\streamlit\runtime\state\session_state_proxy.py", line 132, in __getattr__
+    raise AttributeError(_missing_attr_error_message(key))
+AttributeError: st.session_state has no attribute "chat_history". Did you forget to initialize it? More info: https://docs.streamlit.io/develop/concepts/architecture/session-state#initialization
+2025-11-11 20:44:23,581 [INFO] ApplicationLog: 永続化済 Chroma をロード: ./chroma_store
+2025-11-11 20:44:23,614 [INFO] ApplicationLog: アプリが起動されました。
+2025-11-11 20:50:00,057 [WARNING] langchain_community.utils.user_agent: USER_AGENT environment variable not set, consider setting it to identify your requests.
+2025-11-11 20:50:01,011 [INFO] ApplicationLog: 永続化済 Chroma をロード: ./chroma_store
+2025-11-11 20:50:01,396 [INFO] chromadb.telemetry.product.posthog: Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-11-11 20:50:01,504 [INFO] ApplicationLog: アプリが起動されました。
+2025-11-11 20:50:15,369 [INFO] ApplicationLog: {'message': '社員の育成方針を要約して、重要ポイントを3つ教えて。', 'application_mode': '社内問い合わせ'}
+2025-11-11 20:50:17,248 [INFO] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2025-11-11 20:50:17,250 [INFO] openai._base_client: Retrying request to /chat/completions in 0.487660 seconds
+2025-11-11 20:50:17,950 [INFO] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2025-11-11 20:50:17,950 [INFO] openai._base_client: Retrying request to /chat/completions in 0.800379 seconds
+2025-11-11 20:50:19,815 [INFO] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2025-11-11 20:50:21,091 [INFO] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2025-11-11 20:50:21,093 [INFO] openai._base_client: Retrying request to /chat/completions in 0.426217 seconds
+2025-11-11 20:50:21,884 [INFO] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2025-11-11 20:50:21,886 [INFO] openai._base_client: Retrying request to /chat/completions in 0.764884 seconds
+2025-11-11 20:50:22,959 [INFO] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2025-11-11 20:50:26,045 [INFO] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2025-11-11 20:50:26,047 [INFO] openai._base_client: Retrying request to /chat/completions in 0.397743 seconds
+2025-11-11 20:50:27,228 [INFO] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2025-11-11 20:50:27,230 [INFO] openai._base_client: Retrying request to /chat/completions in 0.836141 seconds
+2025-11-11 20:50:28,271 [INFO] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2025-11-11 20:50:28,272 [ERROR] ApplicationLog: 回答生成に失敗しました。
+Error code: 429 - {'error': {'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.', 'type': 'insufficient_quota', 'param': None, 'code': 'insufficient_quota'}}
+Traceback (most recent call last):
+  File "C:\Users\diva1\OneDrive\デスクトップ\company_inner_search_app\ダウンロード用\company_inner_search_app\main.py", line 545, in <module>
+    llm_response = utils.get_llm_response(chat_message, mode=auto_mode)
+  File "C:\Users\diva1\OneDrive\デスクトップ\company_inner_search_app\ダウンロード用\company_inner_search_app\utils.py", line 378, in get_llm_response
+    question_text = _invoke_with_retry(question_generator,
+        {"input": chat_message, "chat_history": st.session_state.chat_history}
+    )
+  File "C:\Users\diva1\OneDrive\デスクトップ\company_inner_search_app\ダウンロード用\company_inner_search_app\.venv\Lib\site-packages\tenacity\__init__.py", line 338, in wrapped_f
+    return copy(f, *args, **kw)
+  File "C:\Users\diva1\OneDrive\デスクトップ\company_inner_search_app\ダウンロード用\company_inner_search_app\.venv\Lib\site-packages\tenacity\__init__.py", line 477, in __call__
+    do = self.iter(retry_state=retry_state)
+  File "C:\Users\diva1\OneDrive\デスクトップ\company_inner_search_app\ダウンロード用\company_inner_search_app\.venv\Lib\site-packages\tenacity\__init__.py", line 378, in iter
+    result = action(retry_state)
+  File "C:\Users\diva1\OneDrive\デスクトップ\company_inner_search_app\ダウンロード用\company_inner_search_app\.venv\Lib\site-packages\tenacity\__init__.py", line 420, in exc_check
+    raise retry_exc.reraise()
+          ~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\diva1\OneDrive\デスクトップ\company_inner_search_app\ダウンロード用\company_inner_search_app\.venv\Lib\site-packages\tenacity\__init__.py", line 187, in reraise
+    raise self.last_attempt.result()
+          ~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\diva1\AppData\Local\Programs\Python\Python313\Lib\concurrent\futures\_base.py", line 449, in result
+    return self.__get_result()
+           ~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\diva1\AppData\Local\Programs\Python\Python313\Lib\concurrent\futures\_base.py", line 401, in __get_result
+    raise self._exception
+  File "C:\Users\diva1\OneDrive\デスクトップ\company_inner_search_app\ダウンロード用\company_inner_search_app\.venv\Lib\site-packages\tenacity\__init__.py", line 480, in __call__
+    result = fn(*args, **kwargs)
+  File "C:\Users\diva1\OneDrive\デスクトップ\company_inner_search_app\ダウンロード用\company_inner_search_app\utils.py", line 39, in _invoke_with_retry
+    return runnable.invoke(inputs)
+           ~~~~~~~~~~~~~~~^^^^^^^^
+  File "C:\Users\diva1\OneDrive\デスクトップ\company_inner_search_app\ダウンロード用\company_inner_search_app\.venv\Lib\site-packages\langchain_core\runnables\base.py", line 3129, in invoke
+    input_ = context.run(step.invoke, input_, config)
+  File "C:\Users\diva1\OneDrive\デスクトップ\company_inner_search_app\ダウンロード用\company_inner_search_app\.venv\Lib\site-packages\langchain_core\language_models\chat_models.py", line 382, in invoke
+    self.generate_prompt(
+    ~~~~~~~~~~~~~~~~~~~~^
+        [self._convert_input(input)],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<6 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    ).generations[0][0],
+    ^
+  File "C:\Users\diva1\OneDrive\デスクトップ\company_inner_search_app\ダウンロード用\company_inner_search_app\.venv\Lib\site-packages\langchain_core\language_models\chat_models.py", line 1101, in generate_prompt
+    return self.generate(prompt_messages, stop=stop, callbacks=callbacks, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\diva1\OneDrive\デスクトップ\company_inner_search_app\ダウンロード用\company_inner_search_app\.venv\Lib\site-packages\langchain_core\language_models\chat_models.py", line 911, in generate
+    self._generate_with_cache(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^
+        m,
+        ^^
+    ...<2 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    )
+    ^
+  File "C:\Users\diva1\OneDrive\デスクトップ\company_inner_search_app\ダウンロード用\company_inner_search_app\.venv\Lib\site-packages\langchain_core\language_models\chat_models.py", line 1205, in _generate_with_cache
+    result = self._generate(
+        messages, stop=stop, run_manager=run_manager, **kwargs
+    )
+  File "C:\Users\diva1\OneDrive\デスクトップ\company_inner_search_app\ダウンロード用\company_inner_search_app\.venv\Lib\site-packages\langchain_openai\chat_models\base.py", line 1299, in _generate
+    raise e
+  File "C:\Users\diva1\OneDrive\デスクトップ\company_inner_search_app\ダウンロード用\company_inner_search_app\.venv\Lib\site-packages\langchain_openai\chat_models\base.py", line 1294, in _generate
+    raw_response = self.client.with_raw_response.create(**payload)
+  File "C:\Users\diva1\OneDrive\デスクトップ\company_inner_search_app\ダウンロード用\company_inner_search_app\.venv\Lib\site-packages\openai\_legacy_response.py", line 364, in wrapped
+    return cast(LegacyAPIResponse[R], func(*args, **kwargs))
+                                      ~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\diva1\OneDrive\デスクトップ\company_inner_search_app\ダウンロード用\company_inner_search_app\.venv\Lib\site-packages\openai\_utils\_utils.py", line 286, in wrapper
+    return func(*args, **kwargs)
+  File "C:\Users\diva1\OneDrive\デスクトップ\company_inner_search_app\ダウンロード用\company_inner_search_app\.venv\Lib\site-packages\openai\resources\chat\completions\completions.py", line 1156, in create
+    return self._post(
+           ~~~~~~~~~~^
+        "/chat/completions",
+        ^^^^^^^^^^^^^^^^^^^^
+    ...<46 lines>...
+        stream_cls=Stream[ChatCompletionChunk],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\diva1\OneDrive\デスクトップ\company_inner_search_app\ダウンロード用\company_inner_search_app\.venv\Lib\site-packages\openai\_base_client.py", line 1259, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+                           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\diva1\OneDrive\デスクトップ\company_inner_search_app\ダウンロード用\company_inner_search_app\.venv\Lib\site-packages\openai\_base_client.py", line 1047, in request
+    raise self._make_status_error_from_response(err.response) from None
+openai.RateLimitError: Error code: 429 - {'error': {'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.', 'type': 'insufficient_quota', 'param': None, 'code': 'insufficient_quota'}}
+2025-11-11 20:56:49,967 [WARNING] langchain_community.utils.user_agent: USER_AGENT environment variable not set, consider setting it to identify your requests.
+2025-11-11 20:56:50,885 [INFO] ApplicationLog: 永続化済 Chroma をロード: ./chroma_store
+2025-11-11 20:56:51,261 [INFO] chromadb.telemetry.product.posthog: Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-11-11 20:56:51,369 [INFO] ApplicationLog: アプリが起動されました。
+2025-11-11 20:58:23,506 [INFO] ApplicationLog: {'message': '従業員の一覧を表で見せて。', 'application_mode': '社内問い合わせ'}
+2025-11-11 20:59:47,151 [INFO] ApplicationLog: {'message': '人事部の育成方針をわかりやすく要約して3つのポイントに整理して。', 'application_mode': '社内文書検索'}
+2025-11-11 20:59:52,439 [INFO] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-11-11 20:59:53,576 [INFO] httpx: HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2025-11-11 20:59:56,122 [INFO] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-11-11 20:59:56,142 [INFO] ApplicationLog: {'message': {'mode': '社内問い合わせ', 'answer': '回答に必要な情報が見つかりませんでした。'}, 'application_mode': '社内問い合わせ'}
+2025-11-11 21:04:25,617 [WARNING] langchain_community.utils.user_agent: USER_AGENT environment variable not set, consider setting it to identify your requests.
+2025-11-11 21:04:26,559 [INFO] ApplicationLog: 永続化済 Chroma をロード: ./chroma_store
+2025-11-11 21:04:26,910 [INFO] chromadb.telemetry.product.posthog: Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-11-11 21:04:27,011 [INFO] ApplicationLog: アプリが起動されました。
+2025-11-11 21:04:39,752 [INFO] ApplicationLog: {'message': '人事部の育成方針をわかりやすく要約して3つのポイントに整理して。', 'application_mode': '社内文書検索'}
+2025-11-11 21:04:45,716 [INFO] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-11-11 21:04:46,378 [INFO] httpx: HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2025-11-11 21:04:48,275 [INFO] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-11-11 21:04:48,286 [INFO] ApplicationLog: {'message': {'mode': '社内文書検索', 'answer': '\n    入力内容と関連する社内文書が見つかりませんでした。\n\n    入力内容を変更してください。\n', 'no_file_path_flg': True}, 'application_mode': '社内文書検索'}
+2025-11-11 21:10:09,512 [WARNING] langchain_community.utils.user_agent: USER_AGENT environment variable not set, consider setting it to identify your requests.
+2025-11-11 21:10:10,413 [INFO] ApplicationLog: 永続化済 Chroma をロード: ./chroma_store
+2025-11-11 21:10:10,778 [INFO] chromadb.telemetry.product.posthog: Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-11-11 21:10:10,881 [INFO] ApplicationLog: アプリが起動されました。
+2025-11-11 21:10:25,526 [INFO] ApplicationLog: {'message': '人事 OR HR OR 育成 OR 研修 に関する社内文書の保存先を、候補を3件教えて。PDFならページ番号も。', 'application_mode': '社内文書検索'}
+2025-11-11 21:10:32,629 [INFO] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-11-11 21:10:34,513 [INFO] httpx: HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2025-11-11 21:10:35,387 [INFO] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-11-11 21:10:35,402 [INFO] ApplicationLog: {'message': {'mode': '社内文書検索', 'answer': '\n    入力内容と関連する社内文書が見つかりませんでした。\n\n    入力内容を変更してください。\n', 'no_file_path_flg': True}, 'application_mode': '社内文書検索'}
+2025-11-11 21:13:23,486 [INFO] ApplicationLog: {'message': '議事録」または「報告書」を含む社内文書の保存先を上位3件。PDFならページ番号も。', 'application_mode': '社内文書検索'}
+2025-11-11 21:13:27,149 [INFO] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-11-11 21:13:27,653 [INFO] httpx: HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2025-11-11 21:13:28,586 [INFO] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-11-11 21:13:28,596 [INFO] ApplicationLog: {'message': {'mode': '社内文書検索', 'answer': '\n    入力内容と関連する社内文書が見つかりませんでした。\n\n    入力内容を変更してください。\n', 'no_file_path_flg': True}, 'application_mode': '社内文書検索'}
+2025-11-11 21:22:28,907 [WARNING] langchain_community.utils.user_agent: USER_AGENT environment variable not set, consider setting it to identify your requests.
+2025-11-11 21:22:29,839 [INFO] ApplicationLog: 永続化済 Chroma をロード: ./chroma_store
+2025-11-11 21:22:30,217 [INFO] chromadb.telemetry.product.posthog: Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-11-11 21:22:30,318 [INFO] ApplicationLog: アプリが起動されました。
+2025-11-11 21:22:44,990 [INFO] ApplicationLog: {'message': '人事部の育成方針をわかりやすく要約して3つのポイントに整理して。', 'application_mode': '社内文書検索'}
+2025-11-11 21:22:51,778 [INFO] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-11-11 21:22:52,763 [INFO] httpx: HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2025-11-11 21:22:53,107 [INFO] httpx: HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2025-11-11 21:22:58,776 [INFO] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-11-11 21:22:59,772 [INFO] httpx: HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2025-11-11 21:23:00,577 [INFO] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-11-11 21:23:00,581 [INFO] ApplicationLog: {'message': {'mode': '社内文書検索', 'answer': '\n    入力内容と関連する社内文書が見つかりませんでした。\n\n    入力内容を変更してください。\n', 'no_file_path_flg': True}, 'application_mode': '社内文書検索'}
+2025-11-11 21:30:34,696 [WARNING] langchain_community.utils.user_agent: USER_AGENT environment variable not set, consider setting it to identify your requests.
+2025-11-11 21:30:35,620 [INFO] ApplicationLog: 永続化済 Chroma をロード: ./chroma_store
+2025-11-11 21:30:35,973 [INFO] chromadb.telemetry.product.posthog: Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-11-11 21:30:36,077 [INFO] ApplicationLog: アプリが起動されました。
+2025-11-11 21:30:45,797 [INFO] ApplicationLog: {'message': '営業ミーティング議事録を要約して、重要ポイントを3つにまとめて。参照元も表示して。', 'application_mode': '社内文書検索'}
+2025-11-11 21:30:51,134 [INFO] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-11-11 21:30:52,450 [INFO] httpx: HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2025-11-11 21:30:53,213 [INFO] httpx: HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2025-11-11 21:30:57,371 [INFO] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-11-11 21:30:57,951 [INFO] httpx: HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2025-11-11 21:30:58,812 [INFO] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-11-11 21:30:58,817 [INFO] ApplicationLog: {'message': {'mode': '社内文書検索', 'answer': '\n    入力内容と関連する社内文書が見つかりませんでした。\n\n    入力内容を変更してください。\n', 'no_file_path_flg': True}, 'application_mode': '社内文書検索'}
+2025-11-11 21:39:56,122 [WARNING] langchain_community.utils.user_agent: USER_AGENT environment variable not set, consider setting it to identify your requests.
+2025-11-11 21:39:57,120 [INFO] ApplicationLog: 初回起動 → 全文書を読み込み、埋め込み生成します
+2025-11-11 21:39:57,122 [WARNING] ApplicationLog: ファイル読み込み失敗: ./data\MTG議事録\議事録ルール.txt (Error loading ./data\MTG議事録\議事録ルール.txt)
+2025-11-11 21:39:58,174 [INFO] chromadb.telemetry.product.posthog: Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-11-11 21:40:03,241 [INFO] httpx: HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2025-11-11 21:40:04,803 [INFO] ApplicationLog: Chroma 永続化完了
+2025-11-11 21:40:04,804 [INFO] ApplicationLog: アプリが起動されました。
+2025-11-11 21:40:07,241 [INFO] ApplicationLog: 永続化済 Chroma をロード: ./chroma_store
+2025-11-11 21:40:07,276 [INFO] ApplicationLog: アプリが起動されました。
+2025-11-11 21:41:35,252 [INFO] ApplicationLog: {'message': '営業ミーティング議事録を要約して、重要ポイントを3つにまとめて。参照元も表示して。', 'application_mode': '社内文書検索'}
+2025-11-11 21:41:40,086 [INFO] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-11-11 21:41:41,203 [INFO] httpx: HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2025-11-11 21:41:42,110 [INFO] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-11-11 21:41:42,131 [INFO] ApplicationLog: {'message': {'mode': '社内文書検索', 'main_message': '入力内容に関する情報は、以下のファイルに含まれている可能性があります。', 'main_file_path': './data/MTG議事録/営業/営業ミーティング議事録.docx', 'sub_message': 'その他、ファイルありかの候補を提示します。', 'sub_choices': [{'source': './data/MTG議事録/マーケティング/マーケティングミーティング議事録.docx'}, {'source': './data/MTG議事録/全社/全社.pdf', 'page_number': 3}, {'source': './data/MTG議事録/全社/全社ミーティング議事録.docx'}, {'source': './data/MTG議事録/採用/採用ミーティング議事録.docx'}]}, 'application_mode': '社内文書検索'}
+2025-11-11 21:42:39,634 [INFO] ApplicationLog: {'message': '営業ミーティング議事録（会社全体）を要約して、重要ポイントを3つに整理して。参照元も出して。', 'application_mode': '社内文書検索'}
+2025-11-11 21:42:50,343 [INFO] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-11-11 21:42:50,801 [INFO] httpx: HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2025-11-11 21:42:51,441 [INFO] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-11-11 21:42:51,451 [INFO] ApplicationLog: {'message': {'mode': '社内文書検索', 'main_message': '入力内容に関する情報は、以下のファイルに含まれている可能性があります。', 'main_file_path': './data/MTG議事録/営業/営業ミーティング議事録.docx', 'sub_message': 'その他、ファイルありかの候補を提示します。', 'sub_choices': [{'source': './data/MTG議事録/マーケティング/マーケティングミーティング議事録.docx'}, {'source': './data/MTG議事録/全社/全社ミーティング議事録.docx'}, {'source': './data/MTG議事録/採用/採用ミーティング議事録.docx'}, {'source': './data/MTG議事録/開発/開発ミーティング議事録.docx'}]}, 'application_mode': '社内文書検索'}
+2025-11-11 21:43:46,691 [INFO] ApplicationLog: {'message': 'MTG議事録のうち、「全社」の回だけを抽出して要約して。\n参照元も出して。', 'application_mode': '社内文書検索'}
+2025-11-11 21:43:56,241 [INFO] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-11-11 21:43:56,706 [INFO] httpx: HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2025-11-11 21:43:57,763 [INFO] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-11-11 21:43:57,791 [INFO] ApplicationLog: {'message': {'mode': '社内文書検索', 'main_message': '入力内容に関する情報は、以下のファイルに含まれている可能性があります。', 'main_file_path': './data/MTG議事録/マーケティング/マーケティングミーティング議事録.docx', 'sub_message': 'その他、ファイルありかの候補を提示します。', 'sub_choices': [{'source': './data/MTG議事録/全社/全社ミーティング議事録.docx'}, {'source': './data/MTG議事録/営業/営業ミーティング議事録.docx'}, {'source': './data/MTG議事録/採用/採用ミーティング議事録.docx'}, {'source': './data/MTG議事録/開発/開発ミーティング議事録.docx'}]}, 'application_mode': '社内文書検索'}
+2025-11-11 21:44:49,539 [INFO] ApplicationLog: {'message': '議事録ルール.txt の内容を要約して。参照元も出して。', 'application_mode': '社内文書検索'}
+2025-11-11 21:44:55,221 [INFO] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-11-11 21:44:56,079 [INFO] httpx: HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2025-11-11 21:44:56,709 [INFO] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-11-11 21:44:56,719 [INFO] ApplicationLog: {'message': {'mode': '社内文書検索', 'answer': '\n    入力内容と関連する社内文書が見つかりませんでした。\n\n    入力内容を変更してください。\n', 'no_file_path_flg': True}, 'application_mode': '社内文書検索'}
+2025-11-11 22:13:44,379 [WARNING] langchain_community.utils.user_agent: USER_AGENT environment variable not set, consider setting it to identify your requests.
+2025-11-11 22:13:45,287 [INFO] ApplicationLog: 初回起動 → 全文書を読み込み、埋め込み生成します
+2025-11-11 22:13:45,288 [INFO] ApplicationLog: INGEST OK (txt): ./data\MTG議事録\議事録ルール.txt
+2025-11-11 22:13:45,711 [INFO] ApplicationLog: INGEST SUMMARY: files=137
+2025-11-11 22:13:46,077 [INFO] chromadb.telemetry.product.posthog: Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-11-11 22:13:53,021 [INFO] httpx: HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2025-11-11 22:13:54,394 [INFO] ApplicationLog: Chroma 永続化完了
+2025-11-11 22:13:54,395 [INFO] ApplicationLog: アプリが起動されました。
+2025-11-11 22:15:18,682 [INFO] ApplicationLog: {'message': '議事録ルール.txt の内容を要約して。参照元も出して。', 'application_mode': '社内文書検索'}
+2025-11-11 22:15:30,296 [INFO] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-11-11 22:15:31,115 [INFO] httpx: HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2025-11-11 22:15:32,855 [INFO] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-11-11 22:15:32,862 [INFO] ApplicationLog: {'message': {'mode': '社内文書検索', 'answer': '\n    入力内容と関連する社内文書が見つかりませんでした。\n\n    入力内容を変更してください。\n', 'no_file_path_flg': True}, 'application_mode': '社内文書検索'}
+2025-11-11 22:16:13,313 [INFO] ApplicationLog: {'message': '人事部に所属している従業員情報を一覧化して。', 'application_mode': '社内問い合わせ'}
+2025-11-11 22:24:42,009 [WARNING] langchain_community.utils.user_agent: USER_AGENT environment variable not set, consider setting it to identify your requests.
+2025-11-11 22:24:42,852 [INFO] ApplicationLog: 永続化済 Chroma をロード: ./chroma_store
+2025-11-11 22:24:43,203 [INFO] chromadb.telemetry.product.posthog: Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-11-11 22:24:43,310 [INFO] ApplicationLog: アプリが起動されました。
+2025-11-11 22:25:00,395 [INFO] ApplicationLog: {'message': '議事録ルール.txt を参照して要約。参照元も表示。', 'application_mode': '社内文書検索'}
+2025-11-11 22:25:10,182 [INFO] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-11-11 22:25:11,086 [INFO] httpx: HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2025-11-11 22:25:12,688 [INFO] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-11-11 22:25:12,709 [INFO] ApplicationLog: {'message': {'mode': '社内文書検索', 'main_message': '入力内容に関する情報は、以下のファイルに含まれている可能性があります。', 'main_file_path': './data\\MTG議事録\\議事録ルール.txt', 'sub_message': 'その他、ファイルありかの候補を提示します。', 'sub_choices': [{'source': './data/MTG議事録/マーケティング/マーケティング.pdf', 'page_number': 3}, {'source': './data/MTG議事録/開発/開発.pdf', 'page_number': 4}]}, 'application_mode': '社内文書検索'}
+2025-11-11 22:25:42,912 [INFO] ApplicationLog: {'message': '議事録ルール.txt の「基本方針」を抽出。ファイルパスを一緒に。', 'application_mode': '社内文書検索'}
+2025-11-11 22:25:51,405 [INFO] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-11-11 22:25:51,929 [INFO] httpx: HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2025-11-11 22:25:52,570 [INFO] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-11-11 22:25:52,593 [INFO] ApplicationLog: {'message': {'mode': '社内文書検索', 'main_message': '入力内容に関する情報は、以下のファイルに含まれている可能性があります。', 'main_file_path': './data\\MTG議事録\\議事録ルール.txt', 'sub_message': 'その他、ファイルありかの候補を提示します。', 'sub_choices': [{'source': './data/MTG議事録/マーケティング/マーケティング.pdf', 'page_number': 3}, {'source': './data/MTG議事録/開発/開発.pdf', 'page_number': 4}]}, 'application_mode': '社内文書検索'}
+2025-11-11 22:26:22,240 [INFO] ApplicationLog: {'message': '人事部に所属している従業員情報を一覧化して', 'application_mode': '社内問い合わせ'}
+2025-11-11 22:42:43,688 [WARNING] langchain_community.utils.user_agent: USER_AGENT environment variable not set, consider setting it to identify your requests.
+2025-11-11 22:42:44,640 [INFO] ApplicationLog: 初回起動 → 全文書を読み込み、埋め込み生成します
+2025-11-11 22:42:44,641 [INFO] ApplicationLog: INGEST OK (txt): ./data\MTG議事録\議事録ルール.txt
+2025-11-11 22:42:45,039 [INFO] ApplicationLog: INGEST SUMMARY: files=137
+2025-11-11 22:42:45,460 [INFO] chromadb.telemetry.product.posthog: Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-11-11 22:42:50,277 [INFO] httpx: HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2025-11-11 22:42:51,591 [INFO] ApplicationLog: Chroma 永続化完了
+2025-11-11 22:42:51,592 [INFO] ApplicationLog: アプリが起動されました。
+2025-11-11 22:43:05,439 [INFO] ApplicationLog: {'message': '議事録ルール.txt を参照して要約。参照元も表示。', 'application_mode': '社内文書検索'}
+2025-11-11 22:43:14,468 [INFO] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-11-11 22:43:15,712 [INFO] httpx: HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2025-11-11 22:43:17,216 [INFO] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-11-11 22:43:17,267 [INFO] ApplicationLog: {'message': {'mode': '社内文書検索', 'main_message': '入力内容に関する情報は、以下のファイルに含まれている可能性があります。', 'main_file_path': './data\\MTG議事録\\議事録ルール.txt', 'sub_message': 'その他、ファイルありかの候補を提示します。', 'sub_choices': [{'source': './data/MTG議事録/全社/全社ミーティング議事録.docx'}, {'source': './data/MTG議事録/教育/教育ミーティング議事録.docx'}, {'source': './data/MTG議事録/開発/開発.pdf', 'page_number': 4}]}, 'application_mode': '社内文書検索'}
+2025-11-11 22:43:48,589 [INFO] ApplicationLog: {'message': '人事部に所属している従業員情報を一覧化して', 'application_mode': '社内問い合わせ'}
+2025-11-11 22:45:11,791 [INFO] ApplicationLog: {'message': '議事録ルール.txt の「基本方針」を要約して。参照元も出して。', 'application_mode': '社内文書検索'}
+2025-11-11 22:45:19,391 [INFO] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-11-11 22:45:20,350 [INFO] httpx: HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2025-11-11 22:45:21,629 [INFO] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-11-11 22:45:21,638 [INFO] ApplicationLog: {'message': {'mode': '社内文書検索', 'main_message': '入力内容に関する情報は、以下のファイルに含まれている可能性があります。', 'main_file_path': './data\\MTG議事録\\議事録ルール.txt', 'sub_message': 'その他、ファイルありかの候補を提示します。', 'sub_choices': [{'source': './data/MTG議事録/マーケティング/マーケティング.pdf', 'page_number': 3}, {'source': './data/MTG議事録/教育/教育ミーティング議事録.docx'}, {'source': './data/MTG議事録/開発/開発.pdf', 'page_number': 4}]}, 'application_mode': '社内文書検索'}
+2025-11-11 22:51:30,978 [WARNING] langchain_community.utils.user_agent: USER_AGENT environment variable not set, consider setting it to identify your requests.
+2025-11-11 22:51:31,813 [INFO] ApplicationLog: 永続化済 Chroma をロード: ./chroma_store
+2025-11-11 22:51:32,238 [INFO] chromadb.telemetry.product.posthog: Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-11-11 22:51:32,343 [INFO] ApplicationLog: アプリが起動されました。
+2025-11-11 22:51:41,582 [INFO] ApplicationLog: {'message': '議事録ルール.txt の「基本方針」を要約して。参照元も出して。', 'application_mode': '社内文書検索'}
+2025-11-11 22:51:48,351 [INFO] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-11-11 22:51:49,148 [INFO] httpx: HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2025-11-11 22:51:58,264 [INFO] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-11-11 22:51:58,283 [INFO] ApplicationLog: {'message': {'mode': '社内文書検索', 'main_message': '入力内容に関する情報は、以下のファイルに含まれている可能性があります。', 'main_file_path': './data\\MTG議事録\\議事録ルール.txt', 'sub_message': 'その他、ファイルありかの候補を提示します。', 'sub_choices': [{'source': './data/MTG議事録/採用/採用ミーティング議事録.docx'}, {'source': './data/MTG議事録/教育/教育ミーティング議事録.docx'}, {'source': './data/MTG議事録/開発/開発.pdf', 'page_number': 4}]}, 'application_mode': '社内文書検索'}
+2025-11-11 23:20:27,621 [WARNING] langchain_community.utils.user_agent: USER_AGENT environment variable not set, consider setting it to identify your requests.
+2025-11-11 23:20:28,463 [INFO] ApplicationLog: 初回起動 → 全文書を読み込み、埋め込み生成します
+2025-11-11 23:20:28,464 [INFO] ApplicationLog: INGEST OK (txt): ./data\MTG議事録\議事録ルール.txt
+2025-11-11 23:20:28,852 [INFO] ApplicationLog: INGEST SUMMARY: files=137
+2025-11-11 23:20:29,194 [INFO] chromadb.telemetry.product.posthog: Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-11-11 23:20:34,409 [INFO] httpx: HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2025-11-11 23:20:35,611 [INFO] ApplicationLog: Chroma 永続化完了
+2025-11-11 23:20:35,612 [INFO] ApplicationLog: アプリが起動されました。
+2025-11-11 23:20:46,652 [INFO] ApplicationLog: {'message': '議事録ルール.txt の「基本方針」を要約して。参照元も出して。', 'application_mode': '社内問い合わせ'}
+2025-11-11 23:20:59,162 [INFO] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-11-11 23:20:59,950 [INFO] httpx: HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2025-11-11 23:21:01,443 [INFO] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-11-11 23:21:01,451 [INFO] ApplicationLog: {'message': {'mode': '社内文書検索', 'answer': '\n    入力内容と関連する社内文書が見つかりませんでした。\n\n    入力内容を変更してください。\n', 'no_file_path_flg': True}, 'application_mode': '社内文書検索'}
+2025-11-11 23:21:11,355 [INFO] ApplicationLog: {'message': '議事録ルール.txt の「基本方針」を要約して。参照元も出して。', 'application_mode': '社内文書検索'}
+2025-11-11 23:21:14,407 [INFO] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-11-11 23:21:15,518 [INFO] httpx: HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2025-11-11 23:21:16,480 [INFO] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-11-11 23:21:16,512 [INFO] ApplicationLog: {'message': {'mode': '社内文書検索', 'main_message': '入力内容に関する情報は、以下のファイルに含まれている可能性があります。', 'main_file_path': './data\\MTG議事録\\議事録ルール.txt', 'sub_message': 'その他、ファイルありかの候補を提示します。', 'sub_choices': [{'source': './data/MTG議事録/マーケティング/マーケティング.pdf', 'page_number': 3}, {'source': './data/MTG議事録/営業/営業.pdf', 'page_number': 2}, {'source': './data/MTG議事録/顧客/既存/バーチャルビジョン合同会社/バーチャルビジョン合同会社.pdf', 'page_number': 2}]}, 'application_mode': '社内文書検索'}
+2025-11-11 23:21:50,867 [INFO] ApplicationLog: {'message': '人事部に所属している従業員情報を一覧化して', 'application_mode': '社内問い合わせ'}
+2025-11-11 23:22:18,411 [INFO] ApplicationLog: {'message': '議事録 OR 報告書 の保存先を上位3件。PDFならページ番号も。', 'application_mode': '社内問い合わせ'}
+2025-11-11 23:22:23,203 [INFO] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-11-11 23:22:23,679 [INFO] httpx: HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2025-11-11 23:22:24,966 [INFO] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-11-11 23:22:24,988 [INFO] ApplicationLog: {'message': {'mode': '社内文書検索', 'main_message': '入力内容に関する情報は、以下のファイルに含まれている可能性があります。', 'main_file_path': './data/MTG議事録/開発/開発.pdf', 'main_page_number': 4, 'sub_message': 'その他、ファイルありかの候補を提示します。', 'sub_choices': [{'source': './data/MTG議事録/顧客/見込み/フォーカスゲート株式会社/フォーカスゲート株式会社ミーティング議事録.docx'}, {'source': './data\\MTG議事録\\議事録ルール.txt'}]}, 'application_mode': '社内文書検索'}
+2025-11-11 23:39:47,893 [WARNING] langchain_community.utils.user_agent: USER_AGENT environment variable not set, consider setting it to identify your requests.
+2025-11-11 23:39:48,755 [INFO] ApplicationLog: 永続化済 Chroma をロード: ./chroma_store
+2025-11-11 23:39:49,111 [INFO] chromadb.telemetry.product.posthog: Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-11-11 23:39:49,221 [INFO] ApplicationLog: アプリが起動されました。
+2025-11-11 23:43:26,932 [WARNING] langchain_community.utils.user_agent: USER_AGENT environment variable not set, consider setting it to identify your requests.
+2025-11-11 23:43:27,810 [INFO] ApplicationLog: 永続化済 Chroma をロード: ./chroma_store
+2025-11-11 23:43:28,202 [INFO] chromadb.telemetry.product.posthog: Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-11-11 23:43:28,299 [INFO] ApplicationLog: アプリが起動されました。
