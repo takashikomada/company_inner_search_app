@@ -2,6 +2,28 @@
 このファイルは、Webアプリのメイン処理が記述されたファイルです。
 """
 
+import streamlit as st
+
+# --- Streamlit の DOM エラー対策 ---
+st.set_page_config(
+    page_title="社内検索アプリ",
+    layout="wide",
+)
+st.markdown(
+    """
+    <style>
+    .stApp {
+        overflow: visible !important;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True,
+)
+
+"""
+このファイルは、Webアプリのメイン処理が記述されたファイルです。
+"""
+
 import logging, os, sys, traceback, datetime, pathlib
 pathlib.Path("logs").mkdir(exist_ok=True)
 logging.basicConfig(
