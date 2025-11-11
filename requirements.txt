@@ -1,8 +1,8 @@
 streamlit==1.39.0
 python-dotenv==1.0.1
 
-# OpenAI
-openai==1.55.3
+# OpenAI（langchain-openai 0.2.12 と完全互換）
+openai==1.56.1
 
 # Utility
 requests==2.32.3
@@ -14,14 +14,14 @@ numpy==1.26.4
 xlsxwriter==3.2.0
 chardet==5.2.0
 
-# LangChain（互換性固定）
+# LangChain（Python 3.11 / 相互互換が保証されている組み合わせ）
 langchain==0.3.9
 langchain-core==0.3.21
 langchain-community==0.3.7
 langchain-openai==0.2.12
 langchain-text-splitters==0.3.2
 
-# Chroma DB（Python 3.11で安定）
+# Chroma DB（Cloud で確実にインストール可能）
 chromadb==1.0.11
 langchain-chroma==0.1.4
 
