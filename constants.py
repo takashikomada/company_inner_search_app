@@ -135,3 +135,11 @@ NO_DOC_MATCH_MESSAGE = """
 CONVERSATION_LOG_ERROR_MESSAGE = "過去の会話履歴の表示に失敗しました。"
 GET_LLM_RESPONSE_ERROR_MESSAGE = "回答生成に失敗しました。"
 DISP_ANSWER_ERROR_MESSAGE = "回答表示に失敗しました。"
+
+# === PATCH: ベクターストア永続化・Web取り込みフラグ（追加）(START)
+# Chroma の永続化ディレクトリ（初回構築後はここからロードして再埋め込みを防ぐ）
+CHROMA_DIR = "./chroma_store"
+
+# アプリ起動時に Web からの取り込みを行うか（429/遅延対策のためデフォルトは False を推奨）
+ENABLE_WEB_SCRAPE = False
+# === PATCH: ベクターストア永続化・Web取り込みフラグ（追加）(END)
