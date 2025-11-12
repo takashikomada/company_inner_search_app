@@ -809,3 +809,85 @@ openai.RateLimitError: Error code: 429 - {'error': {'message': 'You exceeded you
 2025-11-11 23:43:27,810 [INFO] ApplicationLog: 永続化済 Chroma をロード: ./chroma_store
 2025-11-11 23:43:28,202 [INFO] chromadb.telemetry.product.posthog: Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
 2025-11-11 23:43:28,299 [INFO] ApplicationLog: アプリが起動されました。
+2025-11-12 00:20:20,107 [WARNING] langchain_community.utils.user_agent: USER_AGENT environment variable not set, consider setting it to identify your requests.
+2025-11-12 00:20:21,070 [INFO] ApplicationLog: 永続化済 Chroma をロード: ./chroma_store
+2025-11-12 00:20:21,446 [INFO] chromadb.telemetry.product.posthog: Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-11-12 00:20:21,554 [INFO] ApplicationLog: アプリが起動されました。
+2025-11-12 11:30:48,140 [WARNING] langchain_community.utils.user_agent: USER_AGENT environment variable not set, consider setting it to identify your requests.
+2025-11-12 11:30:48,144 [INFO] ApplicationLog: アプリが起動されました。
+2025-11-12 11:32:38,799 [INFO] ApplicationLog: {'message': 'この会社のコンプライアンス方針を教えて', 'application_mode': '社内問い合わせ'}
+2025-11-12 11:32:42,953 [INFO] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-11-12 11:32:42,965 [INFO] ApplicationLog: {'message': {'mode': '社内文書検索', 'answer': '\n    入力内容と関連する社内文書が見つかりませんでした。\n\n    入力内容を変更してください。\n', 'no_file_path_flg': True}, 'application_mode': '社内文書検索'}
+2025-11-12 11:40:02,461 [WARNING] langchain_community.utils.user_agent: USER_AGENT environment variable not set, consider setting it to identify your requests.
+2025-11-12 11:40:02,463 [INFO] ApplicationLog: アプリが起動されました。
+2025-11-12 11:40:15,151 [INFO] ApplicationLog: {'message': 'この会社のコンプライアンス方針を教えて', 'application_mode': '社内問い合わせ'}
+2025-11-12 11:40:19,471 [INFO] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-11-12 11:40:19,482 [INFO] ApplicationLog: {'message': {'mode': '社内文書検索', 'answer': '\n入力内容と関連する社内文書が見つかりませんでした。\n\n入力内容を変更してください。\n', 'no_file_path_flg': True}, 'application_mode': '社内文書検索'}
+2025-11-12 11:49:44,291 [WARNING] langchain_community.utils.user_agent: USER_AGENT environment variable not set, consider setting it to identify your requests.
+2025-11-12 11:49:44,293 [INFO] ApplicationLog: アプリが起動されました。
+2025-11-12 11:49:51,359 [INFO] ApplicationLog: {'message': 'この会社のコンプライアンス方針を教えて', 'application_mode': '社内問い合わせ'}
+2025-11-12 11:49:57,545 [INFO] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-11-12 11:49:57,555 [INFO] ApplicationLog: {'message': {'mode': '社内文書検索', 'answer': '\n入力内容と関連する社内文書が見つかりませんでした。\n\n入力内容を変更してください。\n', 'no_file_path_flg': True}, 'application_mode': '社内文書検索'}
+2025-11-12 11:53:41,527 [INFO] ApplicationLog: RAG init start: top=C:\Users\diva1\OneDrive\デスクトップ\company_inner_search_app\ダウンロード用\company_inner_search_app\data
+2025-11-12 11:53:42,163 [INFO] ApplicationLog: documents loaded: 187
+2025-11-12 11:53:42,171 [INFO] ApplicationLog: split into chunks: 409
+2025-11-12 11:53:43,542 [INFO] chromadb.telemetry.product.posthog: Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-11-12 11:53:48,255 [INFO] httpx: HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2025-11-12 11:53:49,415 [INFO] ApplicationLog: chroma built & persisted
+2025-11-12 11:53:49,416 [WARNING] ApplicationLog: bm25 error: ImportError: Could not import rank_bm25, please install with `pip install rank_bm25`.
+2025-11-12 11:53:49,417 [INFO] ApplicationLog: retriever set: chroma
+2025-11-12 11:53:49,417 [INFO] ApplicationLog: RAG init done
+2025-11-12 11:53:49,417 [INFO] ApplicationLog: アプリが起動されました。
+2025-11-12 11:53:55,282 [INFO] ApplicationLog: RAG init start: top=C:\Users\diva1\OneDrive\デスクトップ\company_inner_search_app\ダウンロード用\company_inner_search_app\data
+2025-11-12 11:53:55,649 [INFO] ApplicationLog: documents loaded: 187
+2025-11-12 11:53:55,656 [INFO] ApplicationLog: split into chunks: 409
+2025-11-12 11:53:56,283 [INFO] ApplicationLog: chroma loaded
+2025-11-12 11:53:56,284 [WARNING] ApplicationLog: bm25 error: ImportError: Could not import rank_bm25, please install with `pip install rank_bm25`.
+2025-11-12 11:53:56,284 [INFO] ApplicationLog: retriever set: chroma
+2025-11-12 11:53:56,284 [INFO] ApplicationLog: RAG init done
+2025-11-12 11:53:56,288 [INFO] ApplicationLog: {'message': 'この会社のコンプライアンス方針を教えて', 'application_mode': '社内問い合わせ'}
+2025-11-12 11:54:02,350 [INFO] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-11-12 11:54:03,479 [INFO] httpx: HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2025-11-12 11:54:06,611 [INFO] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-11-12 11:54:06,648 [INFO] ApplicationLog: {'message': {'mode': '社内文書検索', 'main_message': '入力内容に関する情報は、以下のファイルに含まれている可能性があります。', 'main_file_path': 'C:\\Users\\diva1\\OneDrive\\デスクトップ\\company_inner_search_app\\ダウンロード用\\company_inner_search_app\\data\\compliance_policy.txt', 'sub_message': 'その他、ファイルありかの候補を提示します。', 'sub_choices': [{'source': 'C:\\Users\\diva1\\OneDrive\\デスクトップ\\company_inner_search_app\\ダウンロード用\\company_inner_search_app\\data\\MTG議事録\\全社\\全社.pdf', 'page_number': 6}, {'source': 'C:\\Users\\diva1\\OneDrive\\デスクトップ\\company_inner_search_app\\ダウンロード用\\company_inner_search_app\\data\\MTG議事録\\顧客\\見込み\\フォーカスゲート株式会社\\フォーカスゲート株式会社ミーティング議事録.docx'}, {'source': 'C:\\Users\\diva1\\OneDrive\\デスクトップ\\company_inner_search_app\\ダウンロード用\\company_inner_search_app\\data\\MTG議事録\\議事録ルール.txt'}]}, 'application_mode': '社内文書検索'}
+2025-11-12 11:54:45,950 [INFO] ApplicationLog: RAG init start: top=C:\Users\diva1\OneDrive\デスクトップ\company_inner_search_app\ダウンロード用\company_inner_search_app\data
+2025-11-12 11:54:46,302 [INFO] ApplicationLog: documents loaded: 187
+2025-11-12 11:54:46,310 [INFO] ApplicationLog: split into chunks: 409
+2025-11-12 11:54:46,950 [INFO] ApplicationLog: chroma loaded
+2025-11-12 11:54:46,952 [WARNING] ApplicationLog: bm25 error: ImportError: Could not import rank_bm25, please install with `pip install rank_bm25`.
+2025-11-12 11:54:46,952 [INFO] ApplicationLog: retriever set: chroma
+2025-11-12 11:54:46,952 [INFO] ApplicationLog: RAG init done
+2025-11-12 11:54:47,031 [INFO] ApplicationLog: RAG init start: top=C:\Users\diva1\OneDrive\デスクトップ\company_inner_search_app\ダウンロード用\company_inner_search_app\data
+2025-11-12 11:54:47,371 [INFO] ApplicationLog: documents loaded: 187
+2025-11-12 11:54:47,379 [INFO] ApplicationLog: split into chunks: 409
+2025-11-12 11:54:48,012 [INFO] ApplicationLog: chroma loaded
+2025-11-12 11:54:48,012 [WARNING] ApplicationLog: bm25 error: ImportError: Could not import rank_bm25, please install with `pip install rank_bm25`.
+2025-11-12 11:54:48,013 [INFO] ApplicationLog: retriever set: chroma
+2025-11-12 11:54:48,013 [INFO] ApplicationLog: RAG init done
+2025-11-12 11:55:31,666 [INFO] ApplicationLog: RAG init start: top=C:\Users\diva1\OneDrive\デスクトップ\company_inner_search_app\ダウンロード用\company_inner_search_app\data
+2025-11-12 11:55:31,993 [INFO] ApplicationLog: documents loaded: 187
+2025-11-12 11:55:32,000 [INFO] ApplicationLog: split into chunks: 409
+2025-11-12 11:55:32,624 [INFO] ApplicationLog: chroma loaded
+2025-11-12 11:55:32,625 [WARNING] ApplicationLog: bm25 error: ImportError: Could not import rank_bm25, please install with `pip install rank_bm25`.
+2025-11-12 11:55:32,625 [INFO] ApplicationLog: retriever set: chroma
+2025-11-12 11:55:32,625 [INFO] ApplicationLog: RAG init done
+2025-11-12 11:55:32,629 [INFO] ApplicationLog: {'message': 'この会社のコンプライアンス方針を教えて', 'application_mode': '社内問い合わせ'}
+2025-11-12 11:55:35,853 [INFO] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-11-12 11:55:41,195 [INFO] httpx: HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2025-11-12 11:55:46,660 [INFO] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-11-12 11:55:46,667 [INFO] ApplicationLog: {'message': {'mode': '社内文書検索', 'main_message': '入力内容に関する情報は、以下のファイルに含まれている可能性があります。', 'main_file_path': 'C:\\Users\\diva1\\OneDrive\\デスクトップ\\company_inner_search_app\\ダウンロード用\\company_inner_search_app\\data\\compliance_policy.txt', 'sub_message': 'その他、ファイルありかの候補を提示します。', 'sub_choices': [{'source': 'C:\\Users\\diva1\\OneDrive\\デスクトップ\\company_inner_search_app\\ダウンロード用\\company_inner_search_app\\data\\MTG議事録\\採用\\採用.pdf', 'page_number': 0}, {'source': 'C:\\Users\\diva1\\OneDrive\\デスクトップ\\company_inner_search_app\\ダウンロード用\\company_inner_search_app\\data\\MTG議事録\\全社\\全社.pdf', 'page_number': 6}]}, 'application_mode': '社内文書検索'}
+2025-11-12 11:55:48,202 [INFO] ApplicationLog: RAG init start: top=C:\Users\diva1\OneDrive\デスクトップ\company_inner_search_app\ダウンロード用\company_inner_search_app\data
+2025-11-12 11:55:48,528 [INFO] ApplicationLog: documents loaded: 187
+2025-11-12 11:55:48,535 [INFO] ApplicationLog: split into chunks: 409
+2025-11-12 11:55:49,146 [INFO] ApplicationLog: chroma loaded
+2025-11-12 11:55:49,147 [WARNING] ApplicationLog: bm25 error: ImportError: Could not import rank_bm25, please install with `pip install rank_bm25`.
+2025-11-12 11:55:49,147 [INFO] ApplicationLog: retriever set: chroma
+2025-11-12 11:55:49,147 [INFO] ApplicationLog: RAG init done
+2025-11-12 11:55:49,153 [INFO] ApplicationLog: {'message': 'この方針のポイントを3つに要約して', 'application_mode': '社内問い合わせ'}
+2025-11-12 11:55:52,419 [INFO] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-11-12 11:55:53,058 [INFO] httpx: HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2025-11-12 11:55:59,781 [INFO] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-11-12 11:55:59,799 [INFO] ApplicationLog: {'message': {'mode': '社内文書検索', 'main_message': '入力内容に関する情報は、以下のファイルに含まれている可能性があります。', 'main_file_path': 'C:\\Users\\diva1\\OneDrive\\デスクトップ\\company_inner_search_app\\ダウンロード用\\company_inner_search_app\\data\\compliance_policy.txt', 'sub_message': 'その他、ファイルありかの候補を提示します。', 'sub_choices': [{'source': 'C:\\Users\\diva1\\OneDrive\\デスクトップ\\company_inner_search_app\\ダウンロード用\\company_inner_search_app\\data\\MTG議事録\\全社\\全社.pdf', 'page_number': 6}, {'source': 'C:\\Users\\diva1\\OneDrive\\デスクトップ\\company_inner_search_app\\ダウンロード用\\company_inner_search_app\\data\\MTG議事録\\議事録ルール.txt'}, {'source': 'C:\\Users\\diva1\\OneDrive\\デスクトップ\\company_inner_search_app\\ダウンロード用\\company_inner_search_app\\data\\MTG議事録\\顧客\\見込み\\フォーカスゲート株式会社\\フォーカスゲート株式会社ミーティング議事録.docx'}]}, 'application_mode': '社内文書検索'}
+2025-11-12 11:58:27,627 [INFO] ApplicationLog: RAG init start: top=C:\Users\diva1\OneDrive\デスクトップ\company_inner_search_app\ダウンロード用\company_inner_search_app\data
+2025-11-12 11:58:27,968 [INFO] ApplicationLog: documents loaded: 187
+2025-11-12 11:58:27,976 [INFO] ApplicationLog: split into chunks: 409

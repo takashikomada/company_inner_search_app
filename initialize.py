@@ -1,348 +1,149 @@
+# initialize.py
 """
-このファイルは、RAGの初期化処理（データ読み込み、分割、ベクトルDB作成）を担当するファイルです。
+RAGの初期化：データ読み込み→分割→ベクタDB作成→retriever格納
+Chroma失敗や文書0件でもBM25に自動フォールバックして必ず動く
 """
 
-############################################################
-# ライブラリの読み込み
-############################################################
+from __future__ import annotations
 import os
 import logging
-import streamlit as st
+from pathlib import Path
+from typing import List
 
+import streamlit as st
 from dotenv import load_dotenv
 
-from langchain_community.vectorstores import Chroma
-from langchain_community.retrievers import BM25Retriever  # ★ 追加: フォールバック用
-from langchain_openai import OpenAIEmbeddings
+from langchain_core.documents import Document
 from langchain_text_splitters import CharacterTextSplitter
-from langchain_core.documents import Document  # ★ 追加: 手動生成用
-import csv  # ★ 追加: CSV統合用
-
-from langchain_community.document_loaders import (
-    PyMuPDFLoader,
-    Docx2txtLoader,
-    TextLoader,
-    CSVLoader,
-)
-
-from langchain_community.document_loaders import WebBaseLoader
+from langchain_openai import OpenAIEmbeddings
+from langchain_community.vectorstores import Chroma
+from langchain_community.retrievers import BM25Retriever
+from langchain_community.document_loaders import TextLoader, PyMuPDFLoader, Docx2txtLoader
+from langchain_community.document_loaders.csv_loader import CSVLoader
 
 import constants as ct
 
-# [PATCH] Chroma 永続化チェック用
-from pathlib import Path
-
-
-############################################################
-# 設定関連
-############################################################
 load_dotenv()
-
 logger = logging.getLogger(ct.LOGGER_NAME)
 
+# ─────────────────────────────────────────────────────────────
+# ユーティリティ
+# ─────────────────────────────────────────────────────────────
+SUPPORTED = {
+    ".txt":  lambda p: TextLoader(p, encoding="utf-8", autodetect_encoding=True),
+    ".pdf":  PyMuPDFLoader,
+    ".docx": Docx2txtLoader,
+    ".csv":  lambda p: CSVLoader(p, encoding="utf-8"),
+}
 
-############################################################
-# データ読み込み（docx/pdf/txt/csv）
-############################################################
-# =================================================================
-# ★ 課題6対策: CSVを1ドキュメントに統合して読み込むヘルパー
-# =================================================================
-def _csv_to_merged_document(file_path: str) -> Document:
-    """
-    CSVの各行を「- キー: 値 / ...」の箇条書きに整形し、
-    1つの大きなテキスト（Document）に統合して返す。
-    列名は固定せず、存在する全カラムを連結するため任意のCSVに対応。
-    """
-    rows_out = []
+def _safe_load_file(path: str) -> List[Document]:
+    ext = os.path.splitext(path)[1].lower()
+    loader_fn = SUPPORTED.get(ext)
+    if not loader_fn:
+        return []
     try:
-        # UTF-8/BOM どちらでも開けるよう utf-8-sig
-        with open(file_path, newline="", encoding="utf-8-sig") as f:
-            reader = csv.DictReader(f)
-            for row in reader:
-                parts = []
-                for k, v in (row or {}).items():
-                    if v is None:
-                        continue
-                    v = str(v).strip()
-                    if v:
-                        parts.append(f"{k}: {v}")
-                if parts:
-                    rows_out.append("- " + " / ".join(parts))
-    except Exception:
-        # 失敗しても呼び出し元でフォールバック可
-        pass
-
-    merged_text = "【社員名簿（統合）】\n" + "\n".join(rows_out)
-    return Document(
-        page_content=merged_text,
-        metadata={
-            "source": file_path.replace("\\", "/"),
-            "is_csv_merged": True,  # 後段の分割スキップ判定に使用
-        },
-    )
-
-
-def recursive_file_check(target_dir: str, docs_all: list):
-    """
-    指定フォルダ配下のファイルをすべて再帰的に探索し、対応するローダーで読み込む
-    """
-    for root, _, files in os.walk(target_dir):
-        for file in files:
-            file_path = os.path.join(root, file)
-            ext = os.path.splitext(file)[1].lower()
-
-            # === TXT 取り込み（課題5対応・既存コメント保持） =====================
-            if ext == ".txt":
-                try:
-                    loader = TextLoader(file_path, encoding="utf-8")
-                    docs = loader.load()
-                except Exception:
-                    try:
-                        loader = TextLoader(file_path, encoding="cp932")
-                        docs = loader.load()
-                    except Exception:
-                        _content = None
-                        for _enc in ("utf-8-sig", "utf-8", "cp932"):
-                            try:
-                                with open(file_path, "r", encoding=_enc) as _f:
-                                    _content = _f.read()
-                                    break
-                            except Exception:
-                                _content = None
-                        if _content is not None:
-                            docs = [Document(page_content=_content, metadata={
-                                "source": file_path.replace("\\","/"),
-                                "file_path": file_path.replace("\\","/"),
-                                "title": os.path.basename(file_path),
-                                "kind": "txt_fallback"
-                            })]
-                        else:
-                            docs = []
-                # メタデータ標準化
-                for d in docs:
-                    md = dict(d.metadata or {})
-                    md.setdefault("source", file_path.replace("\\","/"))
-                    md.setdefault("file_path", file_path.replace("\\","/"))
-                    md.setdefault("title", os.path.basename(file_path))
-                    d.metadata = md
-                docs_all.extend(docs)
-                try:
-                    logger.info(f"INGEST OK (txt): {file_path}")
-                except Exception:
-                    pass
-                continue
-            # ================================================================
-
-            loader_cls = ct.SUPPORTED_EXTENSIONS.get(ext)
-            if not loader_cls:
-                continue
-
-            try:
-                # ★ CSVだけは1ドキュメントに統合して取り込む（課題6）
-                if ext == ".csv":
-                    try:
-                        docs = [_csv_to_merged_document(file_path)]
-                    except Exception as e:
-                        logger.warning(f"CSV統合読み込みに失敗: {file_path} ({e})")
-                        loader = loader_cls(file_path)
-                        docs = loader.load()
-                else:
-                    loader = loader_cls(file_path)
-                    docs = loader.load()
-
-                # source を固定化
-                for d in docs:
-                    d.metadata = dict(d.metadata or {})
-                    d.metadata["source"] = file_path.replace("\\", "/")
-
-                docs_all.extend(docs)
-            except Exception as e:
-                logger.warning(f"ファイル読み込み失敗: {file_path} ({e})")
-
-
-############################################################
-# Webページ読み込み
-############################################################
-    try:
-        logger.info("INGEST SUMMARY: files=%d" % (len(docs_all)))
-    except Exception:
-        pass
-
-def load_web_sources():
-    """
-    事前に指定した URL からデータを読み込む（WebBaseLoader）
-    """
-    web_docs = []
-
-    # [PATCH] Web取り込みはフラグで制御
-    if not getattr(ct, "ENABLE_WEB_SCRAPE", False):
+        loader = loader_fn(path) if callable(loader_fn) else loader_fn(path)  # type: ignore
+        return loader.load()
+    except Exception as e:
+        logger.warning(f"load failed: {path} ({type(e).__name__}: {e})")
         return []
 
-    for url in ct.WEB_URL_LOAD_TARGETS:
-        try:
-            loader = WebBaseLoader(url)
-            docs = loader.load()
-            for d in docs:
-                d.metadata = dict(d.metadata or {})
-                d.metadata["source"] = url
-            web_docs.extend(docs)
-        except Exception as e:
-            logger.warning(f"Web読み込み失敗: {url} ({e})")
+def _walk_and_load(topdir: str) -> List[Document]:
+    docs: List[Document] = []
+    for root, _, files in os.walk(topdir):
+        for f in files:
+            p = os.path.join(root, f)
+            docs.extend(_safe_load_file(p))
+    return docs
 
-    return web_docs
-
-
-############################################################
-# 全データ読み込み
-############################################################
-def load_data_sources():
-    """
-    RAG が参照するすべてのドキュメントを読み込む
-    """
-    docs_all = []
-    recursive_file_check(ct.RAG_TOP_FOLDER_PATH, docs_all)
-
-    # [PATCH] Web 取り込みON/OFF
-    web_docs = load_web_sources()
-    docs_all.extend(web_docs)
-
-    return docs_all
-
-
-############################################################
-# 文字コードの調整
-############################################################
-def adjust_string(text: str) -> str:
-    """
-    Windows 由来の文字（ファイル名など）を整形する
-    """
-    if not isinstance(text, str):
-        return text
-    return text.replace("\x00", "").strip()
-
-
-############################################################
-# Retriever の初期化
-############################################################
-def initialize_retriever():
-    """
-    ベクターストア（Chroma）を初期化する
-    初回 → 埋め込み生成して Chroma 永続化
-    2回目以降 → 永続化済データをロードして高速起動
-    """
-    if "retriever" in st.session_state:
-        return
-
-    embeddings = OpenAIEmbeddings()
-
-    # [PATCH] Chroma 永続化パス
-    persist_dir = getattr(ct, "CHROMA_DIR", "./chroma_store")
-    persist_path = Path(persist_dir)
-    persist_path.mkdir(parents=True, exist_ok=True)
-
-    def has_chroma_files(path: Path) -> bool:
-        try:
-            return any(path.iterdir())
-        except Exception:
-            return False
-
-    # [PATCH] 永続化データが存在 → そのままロード
-    if has_chroma_files(persist_path):
-        logger.info(f"永続化済 Chroma をロード: {persist_dir}")
-        try:
-            db = Chroma(
-                persist_directory=persist_dir,
-                embedding_function=embeddings,
-            )
-            st.session_state.retriever = db.as_retriever(search_kwargs={"k": ct.TOP_K})
-            return
-        except Exception:
-            # ロード失敗 → フォールバック
-            logger.error("永続化済Chromaのロードに失敗 → BM25にフォールバックします。", exc_info=True)
-            docs_all = load_data_sources()
-            for doc in docs_all:
-                doc.page_content = adjust_string(doc.page_content)
-                doc.metadata = {k: adjust_string(v) for k, v in (doc.metadata or {}).items()}
-            splitter = CharacterTextSplitter(
-                chunk_size=ct.CHUNK_SIZE,
-                chunk_overlap=ct.CHUNK_OVERLAP,
-                separator="\n",
-            )
-            # ★ 統合CSVは分割しない
-            splitted_docs = []
-            for d in docs_all:
-                if isinstance(d.metadata, dict) and d.metadata.get("is_csv_merged"):
-                    splitted_docs.append(d)
-                else:
-                    splitted_docs.extend(splitter.split_documents([d]))
-
-            bm25 = BM25Retriever.from_documents(splitted_docs)
-            bm25.k = ct.TOP_K
-            st.session_state.retriever = bm25
-            st.session_state["vector_fallback"] = "bm25"
-            st.warning(
-                "永続化ベクターストアの読み込みに失敗したため、暫定的に **BM25（キーワード検索）** で稼働します。\n"
-                "後で『ベクターストア再初期化』を実行すると Chroma を再構築できます。",
-                icon="⚠️",
-            )
-            return
-
-    # [PATCH] 初回のみ埋め込み生成
-    logger.info("初回起動 → 全文書を読み込み、埋め込み生成します")
-    docs_all = load_data_sources()
-    for doc in docs_all:
-        doc.page_content = adjust_string(doc.page_content)
-        doc.metadata = {k: adjust_string(v) for k, v in (doc.metadata or {}).items()}
-
+def _split_docs(docs: List[Document]) -> List[Document]:
+    if not docs:
+        return []
     splitter = CharacterTextSplitter(
-        chunk_size=ct.CHUNK_SIZE,
-        chunk_overlap=ct.CHUNK_OVERLAP,
-        separator="\n",
+        chunk_size=getattr(ct, "CHUNK_SIZE", 500),
+        chunk_overlap=getattr(ct, "CHUNK_OVERLAP", 50),
+        separator="\n"
     )
+    return splitter.split_documents(docs)
 
-    # ★ 統合CSVは分割しない
-    splitted_docs = []
-    for d in docs_all:
-        if isinstance(d.metadata, dict) and d.metadata.get("is_csv_merged"):
-            splitted_docs.append(d)
+# ─────────────────────────────────────────────────────────────
+# メイン初期化
+# ─────────────────────────────────────────────────────────────
+def initialize() -> None:
+    """Retrievers を session_state に必ずセットする"""
+    st.session_state.setdefault("retriever", None)
+    st.session_state.setdefault("bm25_retriever", None)
+
+    top = Path(getattr(ct, "RAG_TOP_FOLDER_PATH", "./data")).resolve()
+    chroma_dir = Path(getattr(ct, "CHROMA_DIR", "./chroma_store")).resolve()
+    chroma_dir.mkdir(parents=True, exist_ok=True)
+    Path(getattr(ct, "LOG_DIR_PATH", "./logs")).mkdir(parents=True, exist_ok=True)
+
+    logger.info(f"RAG init start: top={top}")
+
+    # 1) ドキュメント読み込み
+    docs = _walk_and_load(str(top))
+    if not docs:
+        logger.warning("no documents loaded; will rely on BM25 fallback")
+    else:
+        logger.info(f"documents loaded: {len(docs)}")
+
+    # 2) 分割
+    chunks = _split_docs(docs)
+    logger.info(f"split into chunks: {len(chunks)}")
+
+    # 3) ベクタDB（Chroma）作成 or ロード
+    retriever = None
+    try:
+        embeddings = OpenAIEmbeddings()  # APIキーは.envから
+        if len(list(chroma_dir.glob("*"))) == 0 and chunks:
+            # まだ永続化がない → 新規作成
+            vectordb = Chroma.from_documents(
+                documents=chunks,
+                embedding=embeddings,
+                persist_directory=str(chroma_dir),
+            )
+            vectordb.persist()
+            logger.info("chroma built & persisted")
         else:
-            splitted_docs.extend(splitter.split_documents([d]))
+            # 既存をロード（空でも例外ではないので下でBM25保険）
+            vectordb = Chroma(
+                embedding_function=embeddings,
+                persist_directory=str(chroma_dir),
+            )
+            logger.info("chroma loaded")
 
-    try:
-        db = Chroma.from_documents(
-            splitted_docs,
-            embedding=embeddings,
-            persist_directory=persist_dir,  # [PATCH] 永続化
-        )
-        db.persist()
-        logger.info("Chroma 永続化完了")
-        st.session_state.retriever = db.as_retriever(search_kwargs={"k": ct.TOP_K})
-        return
-    except Exception:
-        logger.error("埋め込み生成に失敗 → BM25 リトリーバにフォールバックします。", exc_info=True)
-        bm25 = BM25Retriever.from_documents(splitted_docs)
-        bm25.k = ct.TOP_K
-        st.session_state.retriever = bm25
-        st.session_state["vector_fallback"] = "bm25"
-        st.warning(
-            "埋め込み作成に失敗したため、暫定的に **BM25（キーワード検索）** で稼働します。\n"
-            "課金・クォータ復旧後に『ベクターストア再初期化』で Chroma を再構築してください。",
-            icon="⚠️",
-        )
-        return
+        # retriever 生成
+        retriever = vectordb.as_retriever(search_kwargs={"k": getattr(ct, "TOP_K", 5)})
 
-
-############################################################
-# 初期化メイン
-############################################################
-def initialize():
-    """
-    Streamlit アプリ起動時に呼ばれる初期化処理
-    """
-    try:
-        initialize_retriever()
     except Exception as e:
-        st.error(ct.INITIALIZE_ERROR_MESSAGE)
-        with st.expander("初期化エラー（詳細）"):
-            st.exception(e)
-        return
+        logger.warning(f"chroma error: {type(e).__name__}: {e}")
+        retriever = None
+
+    # 4) BM25 フォールバック（文書0件やChroma失敗時）
+    bm25 = None
+    try:
+        if chunks:
+            bm25 = BM25Retriever.from_documents(chunks)
+        elif docs:
+            bm25 = BM25Retriever.from_documents(docs)
+        if bm25:
+            bm25.k = getattr(ct, "TOP_K", 5)
+            logger.info("bm25 ready")
+    except Exception as e:
+        logger.warning(f"bm25 error: {type(e).__name__}: {e}")
+
+    # 5) 最終確定（必ず retriever を入れる）
+    if retriever is not None:
+        st.session_state["retriever"] = retriever
+        logger.info("retriever set: chroma")
+    elif bm25 is not None:
+        st.session_state["retriever"] = bm25
+        st.session_state["bm25_retriever"] = bm25
+        logger.warning("retriever set: bm25 fallback")
+    else:
+        # 最後の保険（空でもクラッシュしないようにNoneで終わるよりマシ）
+        st.session_state["retriever"] = BM25Retriever.from_documents([Document(page_content="")])
+        logger.error("no documents available; set empty bm25 to avoid crash")
+
+    logger.info("RAG init done")
