@@ -16,6 +16,25 @@ from typing import Any, Dict, List
 ############################################################
 # ヘルパー
 ############################################################
+
+def to_relative(path: str) -> str:
+    """絶対パスっぽい文字列を ./data/... 形式の相対パスに寄せるヘルパー"""
+    try:
+        s = str(path)
+    except Exception:
+        return path
+    try:
+        # data ディレクトリ以降を切り出して ./data/... にする
+        key = "data"
+        if key in s:
+            i = s.rfind(key)
+            if i != -1:
+                return "./" + s[i:]
+        return s
+    except Exception:
+        return s
+
+
 def _fmt_with_page(path: str, page: int | None) -> str:
     """
     # 問題4: PDF のときだけページ番号を後ろに付与して表示する
@@ -28,13 +47,22 @@ def _fmt_with_page(path: str, page: int | None) -> str:
     Returns:
         表示用の文字列
     """
+    # 絶対パスっぽいものを ./data/... に寄せる
+    path = to_relative(path)
+
     try:
         ext = os.path.splitext(path)[1].lower()
     except Exception:
         ext = ""
 
+    # PDF かつページ番号ありのときだけページ番号を付与（表示は 1 始まりに補正）
     if page is not None and ext == ".pdf":
-        return f"{path}（ページNo.{page}）"
+        try:
+            disp_page = int(page) + 1
+        except Exception:
+            disp_page = page
+        return f"{path}（ページNo.{disp_page}）"
+
     return path
 
 
@@ -99,7 +127,10 @@ def display_initial_ai_message():
     AIメッセージの初期表示
     """
     with st.chat_message("assistant"):
-        st.markdown("こんにちは。私は社内文書の情報をもとに回答する生成AIチャットボットです。上記で利用目的を選択し、画面下部のチャット欄からメッセージを送信してください。")
+        st.markdown(
+            "こんにちは。私は社内文書の情報をもとに回答する生成AIチャットボットです。"
+            "上記で利用目的を選択し、画面下部のチャット欄からメッセージを送信してください。"
+        )
 
         # 「社内文書検索」の機能説明
         st.markdown("**【「社内文書検索」を選択した場合】**")
@@ -133,7 +164,7 @@ def display_conversation_log():
                         st.markdown(message["content"]["main_message"])
 
                         icon = utils.get_source_icon(message['content']['main_file_path'])
-                        # # 問題4: ログ再表示時もページ番号付きで表示
+                        # 問題4: ログ再表示時もページ番号付きで表示
                         if "main_page_number" in message["content"]:
                             disp = _fmt_with_page(
                                 message['content']['main_file_path'],
@@ -148,9 +179,12 @@ def display_conversation_log():
                             st.markdown(message["content"]["sub_message"])
                             for sub_choice in message["content"]["sub_choices"]:
                                 icon = utils.get_source_icon(sub_choice['source'])
-                                # # 問題4: サブもページ番号付きで表示
+                                # サブもページ番号付きで表示
                                 if "page_number" in sub_choice:
-                                    disp = _fmt_with_page(sub_choice['source'], sub_choice['page_number'])
+                                    disp = _fmt_with_page(
+                                        sub_choice['source'],
+                                        sub_choice['page_number']
+                                    )
                                 else:
                                     disp = sub_choice['source']
                                 st.info(disp, icon=icon)
@@ -164,7 +198,7 @@ def display_conversation_log():
                     if "file_info_list" in message["content"]:
                         st.divider()
                         st.markdown(f"##### {message['content']['message']}")
-                        # # 問題4: file_info_list はすでに整形済文字列
+                        # file_info_list はすでに整形済文字列
                         for file_info in message["content"]["file_info_list"]:
                             icon = utils.get_source_icon(file_info)
                             st.info(file_info, icon=icon)
@@ -198,7 +232,11 @@ def display_search_llm_response(llm_response):
 
     # --- ソース抽出（context → source_documents → sources）---
     if isinstance(llm_response, dict):
-        raw_ctx = llm_response.get("context") or llm_response.get("source_documents") or llm_response.get("sources")
+        raw_ctx = (
+            llm_response.get("context")
+            or llm_response.get("source_documents")
+            or llm_response.get("sources")
+        )
     else:
         raw_ctx = None
 
@@ -285,7 +323,11 @@ def display_contact_llm_response(llm_response):
 
     # 参照情報の抽出
     if isinstance(llm_response, dict):
-        raw_ctx = llm_response.get("context") or llm_response.get("source_documents") or llm_response.get("sources")
+        raw_ctx = (
+            llm_response.get("context")
+            or llm_response.get("source_documents")
+            or llm_response.get("sources")
+        )
     else:
         raw_ctx = None
     sources = _coerce_sources(raw_ctx)
@@ -312,8 +354,14 @@ def display_contact_llm_response(llm_response):
         st.info(file_info, icon=icon)
         file_info_list.append(file_info)
 
-    content = {"mode": ct.ANSWER_MODE_2, "answer": answer, "message": message, "file_info_list": file_info_list}
+    content = {
+        "mode": ct.ANSWER_MODE_2,
+        "answer": answer,
+        "message": message,
+        "file_info_list": file_info_list,
+    }
     return content
+
 
 # ==========================================
 # タイトル直下の案内表示（初期画面ヒント）
